@@ -42,7 +42,7 @@ class profile::iis::baseline (
   } ->
 
   # Install IIS and dependent features
-  windowsfeature { 'IIS_CLOUDSHOP_SERVER':
+  windowsfeature { $iis_cloudshop_server:
     ensure => present,
   } ->
   # Stop the Default Website
