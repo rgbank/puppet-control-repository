@@ -9,7 +9,7 @@ class profile::node_groups::rgbank {
 
 	node_group { 'RG Bank Web Servers':
 		ensure      => 'present',
-		classes     => { 'role::rgbank_web' => {} },
+		classes     => { 'role::rgbank::web' => {} },
 		environment => 'production',
 		rule        => ['and', ['=', ['trusted', 'extensions', 'pp_role'], 'rgbank-web']],
 		parent      => 'All Nodes',
