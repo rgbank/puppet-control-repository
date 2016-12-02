@@ -3,7 +3,7 @@ class profile::node_groups::environments {
 		ensure               => 'present',
     override_environment => true,
 		environment          => 'production',
-		rule                 => ['and', ['=', ['trusted', 'extensions', 'environment'], 'production']],
+		rule                 => ['=', ['trusted', 'extensions', 'pp_environment'], 'production'],
 		parent               => 'All Nodes',
 	}
 
@@ -11,7 +11,7 @@ class profile::node_groups::environments {
 		ensure               => 'present',
 		environment          => 'staging',
     override_environment => true,
-		rule                 => ['and', ['=', ['trusted', 'extensions', 'environment'], 'staging']],
+		rule                 => ['=', ['trusted', 'extensions', 'pp_environment'], 'staging'],
 		parent               => 'Production environment',
 	}
 
@@ -19,7 +19,7 @@ class profile::node_groups::environments {
 		ensure               => 'present',
 		environment          => 'dev',
     override_environment => true,
-		rule                 => ['and', ['=', ['trusted', 'extensions', 'environment'], 'dev']],
+		rule                 => ['=', ['trusted', 'extensions', 'pp_environment'], 'dev'],
 		parent               => 'Staging environment',
 	}
 

@@ -3,7 +3,7 @@ class profile::node_groups::rgbank {
 		ensure      => 'present',
 		classes     => { 'role::loadbalancer' => {} },
 		environment => 'production',
-		rule        => ['and', ['=', ['trusted', 'extensions', 'role'], 'loadbalancer']],
+		rule        => ['and', ['=', ['trusted', 'extensions', 'pp_role'], 'loadbalancer']],
 		parent      => 'All Nodes',
 	}
 
@@ -11,7 +11,7 @@ class profile::node_groups::rgbank {
 		ensure      => 'present',
 		classes     => { 'role::rgbank_web' => {} },
 		environment => 'production',
-		rule        => ['and', ['=', ['trusted', 'extensions', 'role'], 'rgbank-web']],
+		rule        => ['and', ['=', ['trusted', 'extensions', 'pp_role'], 'rgbank-web']],
 		parent      => 'All Nodes',
 	}
 
@@ -19,7 +19,7 @@ class profile::node_groups::rgbank {
 		ensure      => 'present',
 		classes     => { 'role::databaseserver' => {} },
 		environment => 'production',
-		rule        => ['and', ['=', ['trusted', 'extensions', 'role'], 'database']],
+		rule        => ['and', ['=', ['trusted', 'extensions', 'pp_role'], 'database']],
 		parent      => 'All Nodes',
 	}
 }
