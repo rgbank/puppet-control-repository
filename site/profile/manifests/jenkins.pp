@@ -4,10 +4,6 @@ class profile::jenkins {
     configure_firewall => true,
   }
 
-  apache::vhost { "jenkins-build-repo":
-    docroot => "/var/www/html",
-  }
-
   #jenkins::job { "control-repo":
   #  ensure  => present,
   #  enabled => true,
