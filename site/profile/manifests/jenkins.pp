@@ -10,9 +10,7 @@ class profile::jenkins {
   #  config  => epp('profile/jenkins_job_config.epp'),
   #}
 
-  jenkins::plugin { 'workflow-puppet-enterprise':
-    source => 'http://int-resources.ops.puppetlabs.net/carl/workflow-puppet-enterprise.hpi',
-  }
+  jenkins::plugin { 'workflow-puppet-enterprise': }
 
   jenkins::plugin { 'copyartifact': }
 
