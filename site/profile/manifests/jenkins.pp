@@ -26,6 +26,7 @@ class profile::jenkins {
   jenkins::plugin { 'workflow-step-api': }
   jenkins::plugin { 'copyartifact': }
   jenkins::plugin { 'matrix-project': }
+  jenkins::plugin { 'git': }
 
   file {'/var/www/html/builds':
     ensure  => directory,
