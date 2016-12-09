@@ -13,8 +13,12 @@ class profile::jenkins {
   jenkins::plugin { 'puppet-enterprise-pipeline': }
   jenkins::plugin { 'plain-credentials': }
   jenkins::plugin { 'workflow-basic-steps': }
-  jenkins::plugin { 'mailer': }
+  jenkins::plugin { 'workflow-scm-step': }
+  jenkins::plugin { 'workflow-support': }
   jenkins::plugin { 'workflow-api': }
+  jenkins::plugin { 'scm-api': }
+  jenkins::plugin { 'ace-editor': }
+  jenkins::plugin { 'jquery-detached': }
   jenkins::plugin { 'script-security': }
   jenkins::plugin { 'workflow-cps': }
   jenkins::plugin { 'workflow-step-api': }
