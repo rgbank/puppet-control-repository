@@ -11,8 +11,10 @@ class profile::jenkins {
   #}
 
   jenkins::plugin { 'puppet-enterprise-pipeline': }
+  jenkins::plugin { 'build-pipeline-plugin': }
   jenkins::plugin { 'plain-credentials': }
   jenkins::plugin { 'workflow-basic-steps': }
+  jenkins::plugin { 'workflow-aggregator': }
   jenkins::plugin { 'workflow-scm-step': }
   jenkins::plugin { 'workflow-support': }
   jenkins::plugin { 'workflow-api': }
