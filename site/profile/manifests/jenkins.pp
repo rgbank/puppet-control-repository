@@ -10,7 +10,7 @@ class profile::jenkins {
   #  config  => epp('profile/jenkins_job_config.epp'),
   #}
 
-  jenkins::plugin { 'workflow-puppet-enterprise': }
+  jenkins::plugin { 'puppet-enterprise-pipeline': }
 
   jenkins::plugin { 'copyartifact': }
 
