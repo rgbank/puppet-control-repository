@@ -5,7 +5,7 @@ class profile::jenkins {
   }
 
   apache::vhost { "jenkins-build-repo":
-    docroot => "/var/www/html":
+    docroot => "/var/www/html",
   }
 
   #jenkins::job { "control-repo":
