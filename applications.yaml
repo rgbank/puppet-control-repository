@@ -4,7 +4,7 @@ dev:
     dev-0:
       components:
         ['Rgbank::Web','Rgbank::Db', 'Rgbank::Load']:
-          - rgbank-dev.vm
+          - rgbank-dev.pdx.puppet.vm
 puppetconf_header:
   rgbank:
     dev-0:
