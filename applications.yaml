@@ -19,7 +19,7 @@ staging:
         db_password: 'myawesomepassword'
       components:
         Rgbank::Web:
-          - rgbank-appserver-01-staging.pdx.puppet.vm
+          - rgbank-appserver-staging-01.pdx.puppet.vm
         Rgbank::Db:
           - database-staging.pdx.puppet.vm
         Rgbank::Load:
