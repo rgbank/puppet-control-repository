@@ -27,6 +27,7 @@ class profile::jenkins {
   jenkins::plugin { 'copyartifact': }
   jenkins::plugin { 'matrix-project': }
   jenkins::plugin { 'git': }
+  jenkins::plugin { 'ssh-agent': }
 
   file {'/var/www/html/builds':
     ensure  => directory,
