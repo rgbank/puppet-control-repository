@@ -10,11 +10,23 @@ class profile::jenkins {
   #  config  => epp('profile/jenkins_job_config.epp'),
   #}
 
-  jenkins::plugin { 'workflow-puppet-enterprise':
-    source => 'http://int-resources.ops.puppetlabs.net/carl/workflow-puppet-enterprise.hpi',
-  }
-
+  jenkins::plugin { 'puppet-enterprise-pipeline': }
+  jenkins::plugin { 'build-pipeline-plugin': }
+  jenkins::plugin { 'plain-credentials': }
+  jenkins::plugin { 'workflow-basic-steps': }
+  jenkins::plugin { 'workflow-aggregator': }
+  jenkins::plugin { 'workflow-scm-step': }
+  jenkins::plugin { 'workflow-support': }
+  jenkins::plugin { 'workflow-api': }
+  jenkins::plugin { 'scm-api': }
+  jenkins::plugin { 'ace-editor': }
+  jenkins::plugin { 'jquery-detached': }
+  jenkins::plugin { 'script-security': }
+  jenkins::plugin { 'workflow-cps': }
+  jenkins::plugin { 'workflow-step-api': }
   jenkins::plugin { 'copyartifact': }
+  jenkins::plugin { 'matrix-project': }
+  jenkins::plugin { 'git': }
 
   file {'/var/www/html/builds':
     ensure  => directory,
