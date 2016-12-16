@@ -10,7 +10,7 @@ puppetconf_header:
     dev-0:
       components:
         ['Rgbank::Web','Rgbank::Db', 'Rgbank::Load']:
-          - rgbank-dev.vm
+          - rgbank-dev.pdx.puppet.vm
 staging:
   rgbank:
     staging-0:
@@ -19,20 +19,20 @@ staging:
         db_password: 'myawesomepassword'
       components:
         Rgbank::Web:
-          - appserver01-staging.vm
+          - rgbank-appserver-01-staging.pdx.puppet.vm
         Rgbank::Db:
-          - database-staging.vm
+          - database-staging.pdx.puppet.vm
         Rgbank::Load:
-          - loadbalancer-staging.vm
+          - rgbank-staging.pdx.puppet.vm
 production:
   rgbank:
     production-static:
       components:
         Rgbank::Web:
-          - appserver01.vm
-          - appserver02.vm
-          - appserver03.vm
+          - rgbank-appserver-01.pdx.puppet.vm
+          - rgbank-appserver-02.pdx.puppet.vm
+          - rgbank-appserver-03.pdx.puppet.vm
         Rgbank::Db:
-          - database.vm
+          - database.pdx.puppet.vm
         Rgbank::Load:
-          - loadbalancer.vm
+          - rgbank.pdx.puppet.vm
