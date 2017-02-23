@@ -1,0 +1,21 @@
+---
+vmwaretools::reposerver: "http://packages.vmware.com"
+vmwaretools::repopath: "/tools"
+vmwaretools::repopriority: 50
+vmwaretools::repoprotect: 0
+vmwaretools::gpgkey_url: "${vmwaretools::reposerver}${vmwaretools::repopath}"
+vmwaretools::proxy: "absent"
+vmwaretools::proxy_username: "absent"
+vmwaretools::proxy_password: "absent"
+vmwaretools::tools_version: "latest"
+vmwaretools::ensure: "present"
+vmwaretools::package: undef
+vmwaretools::package_ensure: "installed"
+vmwaretools::service_ensure: "running"
+vmwaretools::service_hasstatus: undef
+vmwaretools::just_prepend_repopath: false
+vmwaretools::manage_repository: true
+vmwaretools::service_enable: true
+vmwaretools::service_hasrestart: true
+vmwaretools::scsi_timeout: 180
+vmwaretools::disable_tools_version: true

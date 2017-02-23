@@ -1,0 +1,348 @@
+2016-03-08 Michael Arnold <github@razorsedge.org> - 6.0.0
+=========================================================
+
+ Michael Arnold <github@razorsedge.org> (7):
+  * Fully update to support puppetlabs/apt 2.x.
+  * Drop support for Puppet 2.7.
+  * Update README with class links.
+  * Exec['udevrefresh'] should be by $::osfamily.
+  * Puppet 4 treats all facts as strings.
+  * Re-align code to pass lint.
+  * Update versions for 6.0.0 release.
+ 
+ Brandon Weeks <weeks@squareup.com> (1):
+  * Allow puppetlabs-apt 2.x
+ 
+
+2015-11-22 Michael Arnold <github@razorsedge.org> - 5.1.0
+=========================================================
+
+ Austin Mount <mountaustind@johndeere.com> (4):
+  * Add scsi_timeout erb template and param
+  * Add spec testing for scsi timeout
+  * Add RHEL5 provisions for scsi timeout
+  * Add scsi_timeout documentation
+ 
+ Michael Arnold <github@razorsedge.org> (2):
+  * Remove trailing whitespace from scsitimeout.
+  * Update versions for 5.1.0 release.
+ 
+ Benjamin Stier <benjamin.stier@it-informatik.de> (1):
+  * fix rpm gpg-key import
+ 
+
+2015-07-03 Michael Arnold <github@razorsedge.org> - 5.0.1
+=========================================================
+
+ Michael Arnold <github@razorsedge.org> (2):
+  * Update metadata to list Puppet 4 support.
+  * Update versions for 5.0.1 release.
+ 
+
+2015-07-03 Michael Arnold <github@razorsedge.org> - 5.0.0
+=========================================================
+
+ Michael Arnold <github@razorsedge.org> (12):
+  * Rename yum_* class parameters to be repo*.
+  * Add deprecation warnings for the old yum_* parameters.
+  * Update .project.
+  * Convert to new README.markdown format.
+  * Update Puppet 4 gem and support puppet_blacksmith with modulesync.
+  * Update Geppetto .project.
+  * Pin puppetlabs/apt fixture to version 1.8.0.
+  * Properly test for Puppet::Error.
+  * Fix rspec tests to pass on Puppet 4.
+  * Unit test against Puppet 4 via modulesync.
+  * Add gpgkey_url to README.markdown.
+  * Update versions for 5.0.0 release.
+ 
+ Aaron Johnson <acjohnson@pcdomain.com> (1):
+  * added gpgkey_url parameter
+ 
+
+2015-04-06 Michael Arnold <github@razorsedge.org> - 4.9.0
+=========================================================
+
+ Michael Arnold <github@razorsedge.org> (14):
+  * Update metadata.json.
+  * Update rspec-puppet ~> 2.0 and metadata-json-lint >= 0.0.4 with
+    modulesync.
+  * 'subject' method no longer exists in rspec-puppet.
+  * Fix puppetlint rake task with modulesync.
+  * Stick with rspec 2 for unit tests.
+  * Update metadata summary and tags to be compliant with the Forge.
+  * Get code ready for Puppet 4 via modulesync.
+  * Fix lint: class included by relative name.
+  * Add proper SuSE support with zypprepo and not yumrepo.
+  * Add Ubuntu support.
+  * Fix zypprepo gpgkey parameter.
+  * Add rspec test for Ubuntu to main class.
+  * Update supported OS in metadata.json.
+  * Update versions for 4.9.0 release.
+ 
+
+2015-01-02 Michael Arnold <github@razorsedge.org> - 4.8.1
+=========================================================
+
+ Michael Arnold <github@razorsedge.org> (9):
+  * Update to newer Gemfile, Rakefile, and spec_helper.
+  * Fix spacing errors.
+  * Fix license and unbounded ranges in metadata.json.
+  * Add .sync.yml to override puppet-lint tests.
+  * Manage common files with modulesync.
+  * Override puppet-lint tests in .puppet-lint.rc.
+  * Manage .puppet-lint.rc with modulesync.
+  * Fix regular expressions for GH #26.
+  * Update versions for 4.8.1 release.
+ 
+
+2014-12-07 Michael Arnold <github@razorsedge.org> - 4.8.0
+=========================================================
+
+ Michael Arnold <github@razorsedge.org> (5):
+  * Added tags to metadata.json.
+  * Fix issues_url in metadata.json.
+  * Drop support of OSs not supported by VMware.
+  * Update README.md with OS support limits.
+  * Update versions for 4.8.0 release.
+ 
+
+2014-09-22 Michael Arnold <github@razorsedge.org> - 4.7.0
+=========================================================
+
+ Michael Arnold <github@razorsedge.org> (15):
+  * Add a directory filter for Geppetto.
+  * Deal with the people who wipe /etc/yum.repos.d .
+  * Simplify rspec failure tests.
+  * Fix rspec tests to pass.
+  * Convert fixtures repositories to use https.
+  * Expand Puppet versions tested in Travis-CI.
+  * Update Modulefile source to use https.
+  * Update Geppetto .project to version 4.
+  * Allow tracking of metadata.json.
+  * Expand Puppet versions tested in Travis-CI.
+  * Switch to depending on wolfspyre/vmware_puppetfact.
+  * Also update the Modulefile for the dependency.
+  * Switch to using metadata.json vs Modulefile.
+  * Update rspec to work with regex fix.
+  * Update versions for 4.7.0 release.
+ 
+ salderma <salderman1@udayton.edu> (8):
+  * adding param for supported platform. changing fail to notify
+  * adding if supported wrapper around actions in vmware case logic
+  * fixup for puppet-lint
+  * syntax error on notify
+  * another syntax error.
+  * replacing notify with notice
+  * adding param supported to class parameters from params.pp
+  * adjusting declaration of $supported, removing from class params
+ 
+ John Gallo <jgallo@cpg.org> (1):
+  * Change regex from +(one or more) to *(zero or more) because it fails on
+    ESX 5.0
+ 
+
+2013-08-18 Michael Arnold <github@razorsedge.org> - 4.6.0
+=========================================================
+
+ Michael Arnold <github@razorsedge.org> (2):
+  * Add LICENSE reference to README.md.
+  * Update versions for 4.6.0 release.
+ 
+ Wolf Noble <wnoble@datapipe.com> (1):
+  * Merge in vmware_puppetfact module
+ 
+
+2013-07-22 Michael Arnold <github@razorsedge.org> - 4.5.0
+=========================================================
+
+ Michael Arnold <github@razorsedge.org> (16):
+  * Update tests/init.pp to local standards.
+  * Update .travis.yml to support updated Puppet versions.
+  * Update Modulefile to use correct license name.
+  * Moved package repo config into vmwaretools::repo.
+  * Clean up vmwaretools_ntp_spec.rb.
+  * Removed last references to open-vm-tools.
+  * Refactor vmwaretools_spec.rb.
+  * Renamed vmwaretools_spec.rb.
+  * Cleaned out unused code from Rspec tests.
+  * Move $ensure to top of class to make lint happy.
+  * Fix typos in README.md.
+  * Expand Puppet versions tested in Travis-CI.
+  * Rake validate to also check ERB for syntax errors.
+  * Remove git-log-to-changelog from Modulefile.
+  * Install $majdistrelease pattern in params.pp.
+  * Update versions for 4.5.0 release.
+ 
+
+2013-05-25 Michael Arnold <github@razorsedge.org> - 4.4.1
+=========================================================
+
+ Michael Arnold <github@razorsedge.org> (2):
+  * Add CHANGELOG generation during module build.
+  * Update versions for 4.4.1 release.
+ 
+
+2013-05-25 Michael Arnold <github@razorsedge.org> - 4.4.0
+=========================================================
+
+ Michael Arnold <github@razorsedge.org> (6):
+  * Use puppetlabs-stdlib 2.6.0 for testing.
+  * Added manage_repository parameter.
+  * Update README.md about manage_repository parameter.
+  * Updated README.md.
+  * Fix Markdown code blocks in README.md.
+  * Update versions for 4.4.0 release.
+ 
+
+2013-02-05 Michael Arnold <github@razorsedge.org> - 4.3.0
+=========================================================
+
+ Michael Arnold <github@razorsedge.org> (5):
+  * Add parameters to customize vmware-tools yumrepo.
+  * Update README for yumrepo parameters.
+  * Update rake and Travis testing environment.
+  * Increase puppetlabs/stdlib dependency to 2.3.0.
+  * Update versions for 4.3.0 release.
+ 
+
+2013-01-12 Michael Arnold <github@razorsedge.org> - 4.2.0
+=========================================================
+
+ Michael Arnold <github@razorsedge.org> (4):
+  * Update Travis config file.
+  * Allow tools to report version to vCenter.
+  * Update README.md
+  * Update versions for 4.2.0 release.
+ 
+
+2012-10-27 Michael Arnold <github@razorsedge.org> - 4.1.2
+=========================================================
+
+ Michael Arnold <github@razorsedge.org> (3):
+  * Converted to puppetlabs_spec_helper.
+  * Support upstart in VMware Tools 5.1 on EL6
+  * Forge 4.1.2 release.
+ 
+
+2012-10-21 Michael Arnold <github@razorsedge.org> - 4.1.1
+=========================================================
+
+ Michael Arnold <github@razorsedge.org> (3):
+  * OSP 5.0+ rhel does not have i686 directory.
+  * Converted to puppetlabs_spec_helper.
+  * Forge 4.1.1 release.
+ 
+
+2012-08-05 Michael Arnold <github@razorsedge.org> - 4.1.0
+=========================================================
+
+ Geoff Davis <gadavis@ucsd.edu> (15):
+  * Update module for ESX tools 5.0
+  * Restore compatibility with 3.x series
+  * Make ntp class compatible with parameterized base class
+  * Update copyright info with UC
+  * Fix handling of multiple gpgkeys for the yum repo
+  * fix regression on 5x packagename
+  * Fix variable check in ntp class
+  * remove variable check completely from ntp class
+  * re-add variable check, fully qual the variable
+  * put the condition in the right block
+  * qualify variable in vmwaretools::ntp
+  * Fix tests for existing cases on main class
+  * Change ntp test to check for vmwaretools base class
+  * readability enhancements to init.pp
+  * Add specific tests for 3.x, 4.0x, 4.1x, and 5.0u1 to RedHat
+ 
+ Michael Arnold <github@razorsedge.org> (10):
+  * Touch-ups for OSP 5.0 support
+  * Update rspec integration.
+  * Add support for Top Scope variables.
+  * Move $majdistrelease into case statement.
+  * Update Geppetto and Travis-CI configs.
+  * Add additional package to vmwaretools::ntp rspec.
+  * Update Modulefile documentation.
+  * Fixed error in vmwaretools::ntp and added tests.
+  * More documentation updates.
+  * Forge 4.1.0 release.
+ 
+
+2012-07-18 Michael Arnold <github@razorsedge.org> - 4.0.2
+=========================================================
+
+ Michael Arnold <github@razorsedge.org> (1):
+  * Fix the yumrepo gpgkey URL due to upstream move.
+ 
+
+2012-05-26 Michael Arnold <github@razorsedge.org> - 4.0.1
+=========================================================
+
+ Michael Arnold <github@razorsedge.org> (1):
+  * Change github account to razorsedge
+ 
+
+2012-04-21 Michael Arnold <github@razorsedge.org> - 4.0.0
+=========================================================
+
+ Michael Arnold <github@razorsedge.org> (25):
+  * Parameterized Class
+  * First attempt at rspec tests.
+  * First attempt at rspec tests.
+  * Added support for Travis-CI.
+  * Fix errors discovered by puppet-lint.
+  * Added Travis-CI graphic to README.
+  * Remove puppet-module from Rakefile.
+  * Update Travis-CI config file.
+  * Massive update to unit tests.
+  * Small refactor of ::params.
+  * Removed unneeded path value from Execs.
+  * Reverse the descriptions in Rakefile.
+  * Fixed class syntax in README.md.
+  * Fix Travis-CI configs to use the master branch.
+  * ISSUE: Rpm install fails
+  * Consolidate yumrepo.
+  * Reformat and update puppet documentation.
+  * TODO: Confirm that vmtoolsd works the same
+  * TODO: split vmware-tools.syncTime out to a module
+  * Forgot to fully qualify $::virtual.
+  * Update the Travis-CI config file.
+  * Drop support for Fedora
+  * More mods to Rakefile.
+  * Forge 4.0.0 release.
+  * Fixed missing doco entry.
+ 
+
+2012-03-29 Michael Arnold <github@razorsedge.org> - 3.0.1
+=========================================================
+
+ Michael Arnold <github@razorsedge.org> (4):
+  * Style Guide - Quotes
+  * 4.1 tools service name is vmtoolsd
+  * Accidentally removed Fedora support.
+  * Forge 3.0.1 release.
+ 
+
+2012-03-18 Michael Arnold <github@razorsedge.org> - 3.0.0
+=========================================================
+
+ Michael Arnold <github@razorsedge.org> (3):
+  * Added a little more documentation.
+  * Slight formatting fixes.
+  * Refactored and renamed for Forge 3.0.0 release.
+ 
+
+2012-03-10 Michael Arnold <github@razorsedge.org> - 2.0.0
+=========================================================
+
+ Michael Arnold <github@razorsedge.org> (2):
+  * Refactored for 2.0.0 release.
+  * Removed $lsbmajdistrelease.
+ 
+ Mike Arnold <mike@razorsedge.org> (1):
+  * Added TODO file.
+ 
+
+2011-09-04 Mike Arnold <mike@razorsedge.org> - 1.0.0
+====================================================
+
+

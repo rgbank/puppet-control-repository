@@ -1,0 +1,20 @@
+---
+version: 5
+hierarchy:
+  - name: "Full Version"
+    path: "%{facts.os.name}-%{facts.os.release.full}"
+
+  - name: "Major Version"
+    path: "%{facts.os.name}-%{facts.os.release.major}"
+
+  - name: "Distribution Name"
+    path: "%{facts.os.name}"
+
+  - name: "Operating System Family"
+    path: "%{facts.os.family}"
+
+  - name: "Calculated Resource Parameters"
+    data_hash: vmwaretools::resource_parameters()
+
+defaults:
+  datadir: "hieradata"
