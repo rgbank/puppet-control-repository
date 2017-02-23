@@ -68,6 +68,7 @@ mod 'badgerious/windows_env', '2.2.2'
 mod 'reidmv-unzip', '0.1.2'
 mod 'garethr/docker'
 mod 'WhatsARanjit/node_manager', '0.3.0'
+mod 'vshn-gitlab', '1.11.0'
 
 mod 'windows_ad',
   :git => 'https://github.com/glennsarti/glennsarti-windows_ad'
