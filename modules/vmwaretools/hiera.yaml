@@ -14,7 +14,7 @@ hierarchy:
     path: "%{facts.os.family}"
 
   - name: "Calculated Resource Parameters"
-    data_hash: vmwaretools::resource_parameters()
+    data_hash: vmwaretools::resource_parameters
 
 defaults:
   datadir: "hieradata"
