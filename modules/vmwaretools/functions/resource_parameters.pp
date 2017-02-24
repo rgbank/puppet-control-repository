@@ -3,6 +3,7 @@ function vmwaretools::resource_parameters(
   Puppet::LookupContext $context
 ){
   $os = $context.interpolate("%{os}")
+  fail $os
   $architecture = $context.interpolate("%{architecture}")
 
   case $os[family] {
