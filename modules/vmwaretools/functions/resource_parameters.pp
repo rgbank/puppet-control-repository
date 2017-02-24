@@ -2,16 +2,13 @@ function vmwaretools::resource_parameters(
   Hash[0, 0] $options, # does not take options
   Puppet::LookupContext $context
 ){
-  fail $::os
-  #$os = $context.interpolate("%{os}")
-  #$architecture = $context.interpolate("%{architecture}")
 
-  case $os['family'] {
+  case $::os['family'] {
     'RedHat': {
-      case $os[name] {
+      case $::os[name] {
         'RedHat', 'CentOS', 'OEL', 'OracleLinux', 'Scientific': {
 				
-          case $os[release][major] {
+          case $::os[release][major] {
             '3', '4', '5', '6', '7': { }
             default: {
               notice "Your operating system ${os[name]} ${os[release][major]} is unsupported and will not have the VMware Tools OSP installed."
@@ -34,15 +31,15 @@ function vmwaretools::resource_parameters(
       }
     }
     'Suse': {
-      case $os[name] {
+      case $::os[name] {
         'SLES', 'SLED': {
           # TODO: tools 3.5 and 4.x use either sles11 or sles11sp1 while tools >=5 use sles11.1
-          if ($os[release][major] == '9') or  ($os[release][major] == '11') {
-            $distrelease = $os[release][full]
+          if ($::os[release][major] == '9') or  ($::os[release][major] == '11') {
+            $distrelease = $::os[release][full]
           } else {
-            $distrelease = $os[release][major]
+            $distrelease = $::os[release][major]
           }
-          case $os[release][major] {
+          case $::os[release][major] {
             '9', '10', '11': {
               $supported = true
             }
@@ -59,13 +56,13 @@ function vmwaretools::resource_parameters(
           $service_name_5x = 'vmware-tools-services'
           $service_hasstatus_4x = false
           $service_hasstatus_5x = true
-          $repobasearch_4x = $architecture ? {
+          $repobasearch_4x = $::architecture ? {
             'i386'  => 'i586',
-            default => $architecture,
+            default => $::architecture,
           }
-          $repobasearch_5x = $architecture ? {
+          $repobasearch_5x = $::architecture ? {
             'i386'  => 'i586',
-            default => $architecture,
+            default => $::architecture,
           }
         }
         default: {
@@ -74,7 +71,7 @@ function vmwaretools::resource_parameters(
       }
     }
     'Debian': {
-      case $os[name] {
+      case $::os[name] {
         'Ubuntu': {
           case $::lsbdistcodename {
             'hardy', 'intrepid', 'jaunty', 'karmic', 'lucid', 'maverick', 'natty', 'oneric', 'precise': {
