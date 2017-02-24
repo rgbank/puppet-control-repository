@@ -7,7 +7,7 @@ function vmwaretools::resource_parameters(
 
   case $os[family] {
     'RedHat': {
-      case $os[name]
+      case $os[name] {
         'RedHat', 'CentOS', 'OEL', 'OracleLinux', 'Scientific': {
 				
           case $os[release][major] {
