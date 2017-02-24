@@ -4,7 +4,8 @@ vmwaretools::repopath: "/tools"
 vmwaretools::repopriority: 50
 vmwaretools::repoprotect: 0
 vmwaretools::gpgkey_url: "${vmwaretools::reposerver}${vmwaretools::repopath}"
-vmwaretools::proxy: "absent" vmwaretools::proxy_username: "absent"
+vmwaretools::proxy: "absent"
+vmwaretools::proxy_username: "absent"
 vmwaretools::proxy_password: "absent"
 vmwaretools::tools_version: "5"
 vmwaretools::ensure: "present"
