@@ -2,19 +2,19 @@ function vmwaretools::resource_parameters(
   Hash[0, 0] $options, # does not take options
   Puppet::LookupContext $context
 ){
-  $os = $context.interpolate("%{os}")
-  fail $os
-  $architecture = $context.interpolate("%{architecture}")
+  fail $::os
+  #$os = $context.interpolate("%{os}")
+  #$architecture = $context.interpolate("%{architecture}")
 
-  case $os[family] {
+  case $os['family'] {
     'RedHat': {
       case $os[name] {
         'RedHat', 'CentOS', 'OEL', 'OracleLinux', 'Scientific': {
 				
           case $os[release][major] {
-            '3', '4', '5', '6': { }
+            '3', '4', '5', '6', '7': { }
             default: {
-              notice "Your operating system ${os[name]} is unsupported and will not have the VMware Tools OSP installed."
+              notice "Your operating system ${os[name]} ${os[release][major]} is unsupported and will not have the VMware Tools OSP installed."
             }
           }
           $package_name_4x = 'vmware-tools-nox'
