@@ -5,17 +5,17 @@ function vmwaretools::resource_parameters(
 
   $tool_version = $context.interpolate("%{vmwaretools::tools_version}")
   case $tool_version {
-    /^3\..+/: {
+    /^3(\.+\d*)*/: {
       $real_service_name = $context.interpolate("%{vmwaretools::$service_name_4x}")
       $real_service_hasstatus = $context.interpolate("%{service_hasstatus_4x}")
       $real_service_package_name = $context.interpolate("%{package_name_4x}")
     }
-    /^4\..+/: {
+    /^4(\.+\d*)*/: {
       $real_service_name = $service_name_4x
       $real_service_hasstatus = $context.interpolate("%{service_hasstatus_4x}")
       $real_service_package_name = $context.interpolate("%{package_name_4x}")
 	  }
-    /^5\..+/: {
+    /^5(\.+\d*)*/: {
       $real_service_name = $context.interpolate("%{service_name_5x}")
       $real_service_hasstatus = $context.interpolate("%{service_hasstatus_5x}")
       $real_service_package_name = $context.interpolate("%{package_name_5x}")
