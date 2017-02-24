@@ -2,16 +2,19 @@
 version: 5
 hierarchy:
   - name: "Full Version"
-    path: "%{facts.os.name}-%{facts.os.release.full}"
+    path: "%{facts.os.name}-%{facts.os.release.full}.yaml"
 
   - name: "Major Version"
-    path: "%{facts.os.name}-%{facts.os.release.major}"
+    path: "%{facts.os.name}-%{facts.os.release.major}.yaml"
 
   - name: "Distribution Name"
-    path: "%{facts.os.name}"
+    path: "%{facts.os.name}.yaml"
 
   - name: "Operating System Family"
-    path: "%{facts.os.family}"
+    path: "%{facts.os.family}.yaml"
+
+  - name: "Common"
+    path: common.yaml
 
   - name: "Calculated Resource Parameters"
     data_hash: vmwaretools::resource_parameters
