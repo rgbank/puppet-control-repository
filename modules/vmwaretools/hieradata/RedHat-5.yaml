@@ -1,0 +1,2 @@
+---
+vmwaretools::udevrefresh_command: '/sbin/udevadm control --reload-rules && /sbin/udevadm trigger --action=add --subsystem-match=scsi'

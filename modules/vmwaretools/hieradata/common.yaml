@@ -4,8 +4,7 @@ vmwaretools::repopath: "/tools"
 vmwaretools::repopriority: 50
 vmwaretools::repoprotect: 0
 vmwaretools::gpgkey_url: "${vmwaretools::reposerver}${vmwaretools::repopath}"
-vmwaretools::proxy: "absent"
-vmwaretools::proxy_username: "absent"
+vmwaretools::proxy: "absent" vmwaretools::proxy_username: "absent"
 vmwaretools::proxy_password: "absent"
 vmwaretools::tools_version: "latest"
 vmwaretools::ensure: "present"
@@ -19,3 +18,4 @@ vmwaretools::service_enable: true
 vmwaretools::service_hasrestart: true
 vmwaretools::scsi_timeout: 180
 vmwaretools::disable_tools_version: true
+vmwaretools::udevrefresh_command: "/sbin/udevcontrol reload_rules && /sbin/start_udev"

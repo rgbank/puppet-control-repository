@@ -132,234 +132,103 @@
 # Copyright (C) 2012 The Regents of the University of California
 #
 class vmwaretools (
-  $tools_version         = $vmwaretools::params::tools_version,
-  $disable_tools_version = $vmwaretools::params::safe_disable_tools_version,
-  $manage_repository     = $vmwaretools::params::safe_manage_repository,
-  $reposerver            = $vmwaretools::params::reposerver,
-  $repopath              = $vmwaretools::params::repopath,
-  $just_prepend_repopath = $vmwaretools::params::safe_just_prepend_repopath,
-  $priority              = $vmwaretools::params::repopriority,
-  $protect               = $vmwaretools::params::repoprotect,
-  $gpgkey_url            = $vmwaretools::params::gpgkey_url,
-  $proxy                 = $vmwaretools::params::proxy,
-  $proxy_username        = $vmwaretools::params::proxy_username,
-  $proxy_password        = $vmwaretools::params::proxy_password,
-  $ensure                = $vmwaretools::params::ensure,
-  $autoupgrade           = $vmwaretools::params::safe_autoupgrade,
-  $package               = $vmwaretools::params::package,
-  $service_ensure        = $vmwaretools::params::service_ensure,
-  $service_name          = $vmwaretools::params::service_name,
-  $service_enable        = $vmwaretools::params::safe_service_enable,
-  $service_hasstatus     = $vmwaretools::params::service_hasstatus,
-  $service_hasrestart    = $vmwaretools::params::safe_service_hasrestart,
-  $scsi_timeout          = $vmwaretools::params::scsi_timeout,
+  String $tools_version,
+  Boolean $disable_tools_version,
+  Boolean $manage_repository,
+  String $reposerver,
+  String $repopath,
+  Boolean $just_prepend_repopath,
+  Integer $priority,
+  Integer $protect,
+  String $gpgkey_url,
+  String $proxy,
+  String $proxy_username,
+  String $proxy_password,
+  String $ensure,
+  Boolean $autoupgrade,
+  String $package_name,
+  String $package_ensure,
+  String $service_ensure,
+  String $service_name,
+  Boolean $service_enable,
+  Boolean $service_hasstatus,
+  Boolean $service_hasrestart,
+  Integer $scsi_timeout,
+  String $udevrefresh_command,
+) {
 
-  # Deprecated parameters
-  $yum_server            = undef,
-  $yum_path              = undef,
-  $just_prepend_yum_path = undef
-) inherits vmwaretools::params {
-
-  $supported = $vmwaretools::params::supported
-
-  # Validate our booleans
-  validate_bool($manage_repository)
-  validate_bool($disable_tools_version)
-  validate_bool($just_prepend_repopath)
-  validate_bool($autoupgrade)
-  validate_bool($service_enable)
-  validate_bool($service_hasrestart)
-  validate_bool($supported)
-
-  case $ensure {
-    /(present)/: {
-      if $autoupgrade == true {
-        $package_ensure = 'latest'
-      } else {
-        $package_ensure = 'present'
-      }
-
-      if $service_ensure in [ running, stopped ] {
-        $service_ensure_real = $service_ensure
-      } else {
-        fail('service_ensure parameter must be running or stopped')
-      }
-    }
-    /(absent)/: {
-      $package_ensure = 'absent'
-      $service_ensure_real = 'stopped'
-    }
-    default: {
-      fail('ensure parameter must be present or absent')
+  if $manage_repository {
+    class { '::vmwaretools::repo':
+      ensure                => $ensure,
+      tools_version         => $tools_version,
+      reposerver            => $real_reposerver,
+      repopath              => $real_repopath,
+      just_prepend_repopath => $just_prepend_repopath,
+      gpgkey_url            => $gpgkey_url,
+      priority              => $priority,
+      protect               => $protect,
+      proxy                 => $proxy,
+      proxy_username        => $proxy_username,
+      proxy_password        => $proxy_password,
+      before                => Package[$package_name],
     }
   }
 
-  # Deprecated parameters.
-  if $yum_server {
-    crit('This parameter has been renamed to reposerver.')
-    $real_reposerver = $yum_server
-  } else {
-    $real_reposerver = $reposerver
-  }
-  if $yum_path {
-    crit('This parameter has been renamed to repopath.')
-    $real_repopath = $yum_path
-  } else {
-    $real_repopath = $repopath
-  }
-  if $just_prepend_yum_path {
-    crit('This parameter has been renamed to just_prepend_repopath.')
-    $real_just_prepend_repopath = $just_prepend_yum_path
-  } else {
-    $real_just_prepend_repopath = $just_prepend_repopath
+  package { 'VMwareTools':
+    ensure => 'absent',
+    before => Package[$package_name],
   }
 
-  case $::virtual {
-    'vmware': {
-      if $supported {
-        $service_pattern = $tools_version ? {
-          /^3\./  => 'vmware-guestd',
-          /^4\.0/ => 'vmware-guestd',
-          default => 'vmtoolsd',
-        }
+  exec { 'vmware-uninstall-tools':
+    command => '/usr/bin/vmware-uninstall-tools.pl && rm -rf /usr/lib/vmware-tools',
+    path    => '/bin:/sbin:/usr/bin:/usr/sbin',
+    onlyif  => 'test -f /usr/bin/vmware-uninstall-tools.pl',
+    before  => [ Package[$package_name], Package['VMwareTools'], ],
+  }
 
-        $rhel_upstart = $tools_version ? {
-          /^3\./  => false,
-          /^4\./  => false,
-          /^5\.0/ => false,
-          default => true,
-        }
+  # TODO: remove Exec["vmware-uninstall-tools-local"]?
+  exec { 'vmware-uninstall-tools-local':
+    command => '/usr/local/bin/vmware-uninstall-tools.pl && rm -rf /usr/local/lib/vmware-tools',
+    path    => '/bin:/sbin:/usr/bin:/usr/sbin',
+    onlyif  => 'test -f /usr/local/bin/vmware-uninstall-tools.pl',
+    before  => [ Package[$package_name], Package['VMwareTools'], ],
+  }
 
-        $package_real = $package ? {
-          undef   => $tools_version ? {
-            /^3\./  => $vmwaretools::params::package_name_4x,
-            /^4\./  => $vmwaretools::params::package_name_4x,
-            default => $vmwaretools::params::package_name_5x,
-          },
-          default => $package,
-        }
+  package { $package_name:
+    ensure  => $package_ensure,
+  }
 
-        $service_name_real = $service_name ? {
-          undef   => $tools_version ? {
-            /^3\./  => $vmwaretools::params::service_name_4x,
-            /^4\./  => $vmwaretools::params::service_name_4x,
-            default => $vmwaretools::params::service_name_5x,
-          },
-          default => $service_name,
-        }
+  file { '/etc/udev/rules.d/99-vmware-scsi-udev.rules':
+    ensure  => present,
+    content => template('vmwaretools/udev-rules.erb'),
+    require => Package[$package_name],
+    notify  => Exec['udevrefresh'],
+  }
 
-        $service_hasstatus_real = $service_hasstatus ? {
-          undef   => $tools_version ? {
-            /^3\./  => $vmwaretools::params::service_hasstatus_4x,
-            /^4\./  => $vmwaretools::params::service_hasstatus_4x,
-            default => $vmwaretools::params::service_hasstatus_5x,
-          },
-          default => $service_hasstatus,
-        }
+  exec { 'udevrefresh':
+    refreshonly => true,
+    command     => $udevrefresh_command,
+  }
 
-        $repobasearch = $tools_version ? {
-          /^3\./  => $vmwaretools::params::repobasearch_4x,
-          /^4\./  => $vmwaretools::params::repobasearch_4x,
-          default => $vmwaretools::params::repobasearch_5x,
-        }
+  file_line { 'disable-tools-version':
+    path    => '/etc/vmware-tools/tools.conf',
+    line    => $disable_tools_version ? {
+      false   => 'disable-tools-version = "false"',
+      default => 'disable-tools-version = "true"',
+    },
+    match   => '^disable-tools-version\s*=.*$',
+    require => Package[$package_name],
+    notify  => Service[$service_name],
+  }
 
-        if $manage_repository {
-          class { '::vmwaretools::repo':
-            ensure                => $ensure,
-            tools_version         => $tools_version,
-            reposerver            => $real_reposerver,
-            repopath              => $real_repopath,
-            just_prepend_repopath => $real_just_prepend_repopath,
-            gpgkey_url            => $gpgkey_url,
-            priority              => $priority,
-            protect               => $protect,
-            proxy                 => $proxy,
-            proxy_username        => $proxy_username,
-            proxy_password        => $proxy_password,
-            before                => Package[$package_real],
-          }
-        }
-
-        package { 'VMwareTools':
-          ensure => 'absent',
-          before => Package[$package_real],
-        }
-
-        exec { 'vmware-uninstall-tools':
-          command => '/usr/bin/vmware-uninstall-tools.pl && rm -rf /usr/lib/vmware-tools',
-          path    => '/bin:/sbin:/usr/bin:/usr/sbin',
-          onlyif  => 'test -f /usr/bin/vmware-uninstall-tools.pl',
-          before  => [ Package[$package_real], Package['VMwareTools'], ],
-        }
-
-        # TODO: remove Exec["vmware-uninstall-tools-local"]?
-        exec { 'vmware-uninstall-tools-local':
-          command => '/usr/local/bin/vmware-uninstall-tools.pl && rm -rf /usr/local/lib/vmware-tools',
-          path    => '/bin:/sbin:/usr/bin:/usr/sbin',
-          onlyif  => 'test -f /usr/local/bin/vmware-uninstall-tools.pl',
-          before  => [ Package[$package_real], Package['VMwareTools'], ],
-        }
-
-        package { $package_real :
-          ensure  => $package_ensure,
-        }
-
-        file { '/etc/udev/rules.d/99-vmware-scsi-udev.rules':
-          ensure  => present,
-          content => template('vmwaretools/udev-rules.erb'),
-          require => Package[$package_real],
-          notify  => Exec['udevrefresh'],
-        }
-
-        if ($::osfamily == 'RedHat') and ($::operatingsystemmajrelease == '5') {
-          exec { 'udevrefresh':
-            refreshonly => true,
-            command     => '/sbin/udevcontrol reload_rules && /sbin/start_udev',
-          }
-        } else {
-          exec { 'udevrefresh':
-            refreshonly => true,
-            command     => '/sbin/udevadm control --reload-rules && /sbin/udevadm trigger --action=add --subsystem-match=scsi',
-          }
-        }
-
-        file_line { 'disable-tools-version':
-          path    => '/etc/vmware-tools/tools.conf',
-          line    => $disable_tools_version ? {
-            false   => 'disable-tools-version = "false"',
-            default => 'disable-tools-version = "true"',
-          },
-          match   => '^disable-tools-version\s*=.*$',
-          require => Package[$package_real],
-          notify  => Service[$service_name_real],
-        }
-
-        if ($::osfamily == 'RedHat') and ($vmwaretools::params::majdistrelease == '6') and ($rhel_upstart == true) {
-          # VMware-tools 5.1 on EL6 is now using upstart and not System V init.
-          # http://projects.puppetlabs.com/issues/11989#note-7
-          service { $service_name_real :
-            ensure     => $service_ensure_real,
-            hasrestart => true,
-            hasstatus  => true,
-            start      => "/sbin/start ${service_name_real}",
-            stop       => "/sbin/stop ${service_name_real}",
-            status     => "/sbin/status ${service_name_real} | grep -q 'start/'",
-            restart    => "/sbin/restart ${service_name_real}",
-            require    => Package[$package_real],
-          }
-        } else {
-          service { $service_name_real :
-            ensure     => $service_ensure_real,
-            enable     => $service_enable,
-            hasrestart => $service_hasrestart,
-            hasstatus  => $service_hasstatus_real,
-            pattern    => $service_pattern,
-            require    => Package[$package_real],
-          }
-        }
-      }
-    }
-    # If we are not on VMware, do not do anything.
-    default: { }
+  service { $service_name:
+    ensure     => $service_ensure,
+    hasrestart => true,
+    hasstatus  => true,
+    start      => "/sbin/start ${service_name}",
+    stop       => "/sbin/stop ${service_name}",
+    status     => "/sbin/status ${service_name} | grep -q 'start/'",
+    restart    => "/sbin/restart ${service_name}",
+    require    => Package[$package_name],
   }
 }
