@@ -2,7 +2,7 @@ function vmwaretools::resource_parameters(
   Hash[0, 0] $options, # does not take options
   Puppet::LookupContext $context
 ){
-	$os = $context.interpolate("%{os}")
+  $os = $context.interpolate("%{os}")
   $architecture = $context.interpolate("%{architecture}")
 
   case $os[family] {
@@ -103,7 +103,8 @@ function vmwaretools::resource_parameters(
     }
   }
 
-	case $context.interpolate("%{vmwaretools::tools_version}") {
+  $tool_version = $context.interpolate("%{vmwaretools::tools_version}")
+  case $tool_version {
     /^3\..+/: {
       $real_service_name = $service_name_4x
       $real_service_hasstatus = $service_hasstatus_4x
@@ -121,9 +122,11 @@ function vmwaretools::resource_parameters(
     }
   }
 
-  {
+  $return_hash = {
     vmwaretools::service_name => $real_service_name,
     vmwaretools::service_hasstatus => $real_service_hasstatus,
     vmwaretools::package_name => $real_package_name
   }
+
+  $return_hash
 }
