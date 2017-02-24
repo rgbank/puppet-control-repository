@@ -1,0 +1,9 @@
+---
+vmwaretools::package_name_4x: "vmware-tools-nox"
+vmwaretools::service_name_4x: "vmware-tools"
+vmwaretools::service_hasstatus_4x: false
+vmwaretools::package_name_5x:
+  - 'vmware-tools-esx-nox'
+  - 'vmware-tools-esx-kmods-default'
+vmwaretools::service_name_5x: "vmware-tools-services"
+vmwaretools::service_hasstatus_5x: true
