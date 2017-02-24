@@ -104,25 +104,26 @@ function vmwaretools::resource_parameters(
   }
 
 	case $context.interpolate("%{vmwaretools::tools_version}") {
-    /^3\..+/ => {
+    /^3\..+/: {
       $real_service_name = $service_name_4x
       $real_service_hasstatus = $service_hasstatus_4x
       $real_service_package_name = $package_name_4x
-   }
-   /^4\..+/ => {
+    }
+    /^4\..+/: {
       $real_service_name = $service_name_4x
       $real_service_hasstatus = $service_hasstatus_4x
       $real_service_package_name = $package_name_4x
-	}
-  /^5\..+/ => {
+	  }
+    /^5\..+/: {
       $real_service_name = $service_name_5x
       $real_service_hasstatus = $service_hasstatus_5x
       $real_service_package_name = $package_name_5x
+    }
   }
 
   {
-    vmwaretools::service_name => $real_service_name
-    vmwaretools::service_hasstatus => $real_service_hasstatus
+    vmwaretools::service_name => $real_service_name,
+    vmwaretools::service_hasstatus => $real_service_hasstatus,
     vmwaretools::package_name => $real_package_name
   }
 }
