@@ -18,3 +18,4 @@ hierarchy:
 
 defaults:
   datadir: "hieradata"
+  data_hash: yaml_data
