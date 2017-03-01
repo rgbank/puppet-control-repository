@@ -1,0 +1,2 @@
+---
+vmwaretools::repopath: "/tools/releases/latest/rhel6/%{architecture}"
