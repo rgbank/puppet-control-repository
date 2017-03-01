@@ -17,7 +17,7 @@ hierarchy:
     path: common.yaml
 
   - name: "Resource Parameter Lookup"
-    lookup_key: vmwaretools::resource_paramete
+    lookup_key: vmwaretools::resource_parameter
 
 defaults:
   datadir: "hieradata"
