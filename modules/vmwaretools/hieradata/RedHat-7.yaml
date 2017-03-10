@@ -1,0 +1,5 @@
+---
+vmwaretools::repopath: "/tools/releases/latest/rhel6/%{architecture}"
+vmwaretools::manage_repository: false
+vmwaretools::package_name: "open-vm-tools"
+vmwaretools::service_name: ~

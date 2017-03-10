@@ -1,0 +1,26 @@
+{
+  "name": "wolfspyre-vmware_puppetfact",
+  "version": "0.2.2",
+  "source": "UNKNOWN",
+  "author": "wolfspyre",
+  "license": "Apache License, Version 2.0",
+  "summary": "a facter fact to convey some information about the hypervisor we are running on",
+  "description": "UNKNOWN",
+  "project_page": "https://github.com/wolfspyre/vmware_puppetfact",
+  "dependencies": [
+
+  ],
+  "types": [
+
+  ],
+  "checksums": {
+    "Modulefile": "b29bcf952fea96ee4474f7f8c6b220e7",
+    "README": "8fa4f3e7776bbab74876d87dec83d19a",
+    "Rakefile": "f37e6131fe7de9a49b09d31596f5fbf1",
+    "lib/facter/vmware.rb": "fdf0c987ebc1d390d4e2da3d914469a3",
+    "manifests/init.pp": "8c9d9bed90ea9a5450a8a20a912db085",
+    "spec/spec_helper.rb": "d8f2ea158f143a7fd327990ceccdd800",
+    "spec/unit/vmware_facts_spec.rb": "b69970785370b19cfa347b4f8e6365b5",
+    "tests/init.pp": "19ebc7c105bd128d92b6b76b33834ef3"
+  }
+}

@@ -1,0 +1,23 @@
+---
+vmwaretools::reposerver: "https://packages.vmware.com"
+vmwaretools::repopath: "/tools"
+vmwaretools::repopriority: 50
+vmwaretools::repoprotect: 0
+vmwaretools::gpgkey_url: "%{vmwaretools::reposerver}%{vmwaretools::repopath}"
+vmwaretools::gpgkey: "%{vmwaretools::gpgkey_url}/keys/VMWARE-PACKAGING-GPG-DSA-KEY.pub\n    %{vmwaretools::gpgkey_url}/keys/VMWARE-PACKAGING-GPG-RSA-KEY.pub"
+vmwaretools::proxy: "absent"
+vmwaretools::proxy_username: "absent"
+vmwaretools::proxy_password: "absent"
+vmwaretools::tools_version: "5"
+vmwaretools::ensure: "present"
+vmwaretools::package: undef
+vmwaretools::package_ensure: "installed"
+vmwaretools::service_ensure: "running"
+vmwaretools::service_hasstatus: true
+vmwaretools::just_prepend_repopath: false
+vmwaretools::manage_repository: true
+vmwaretools::service_enable: true
+vmwaretools::service_hasrestart: true
+vmwaretools::scsi_timeout: 180
+vmwaretools::disable_tools_version: true
+vmwaretools::udevrefresh_command: "/sbin/udevcontrol reload_rules && /sbin/start_udev"
