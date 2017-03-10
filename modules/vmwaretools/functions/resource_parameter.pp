@@ -41,7 +41,7 @@ function vmwaretools::resource_parameter(
     $parameter_hash = {
       vmwaretools::service_name      => $service_name,
       vmwaretools::service_hasstatus => $service_hasstatus,
-      vmwaretools::package_name      => $package_name
+      vmwaretools::package_name      => $package_name,
       vmwaretools::repobasearch      => $repobasearch,
     }
 
