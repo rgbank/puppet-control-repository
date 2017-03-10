@@ -18,7 +18,7 @@ node {
     git branch: 'dev', credentialsId: 'control-repo-github', url: 'git@github.com:puppetlabs/pmm-puppet-site'
 
     stage 'Lint and unit tests'
-    withEnv(['PATH=/usr/local/bin:$PATH']) {
+    withEnv(['PATH+EXTRA=/usr/local/bin']) {
       sh 'bundle install'
       sh 'bundle exec rspec spec/'
     }
