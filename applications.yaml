@@ -30,8 +30,6 @@ production:
       components:
         Rgbank::Web:
           - rgbank-appserver-01.pdx.puppet.vm
-          - rgbank-appserver-02.pdx.puppet.vm
-          - rgbank-appserver-03.pdx.puppet.vm
         Rgbank::Db:
           - database-production.pdx.puppet.vm
         Rgbank::Load:
