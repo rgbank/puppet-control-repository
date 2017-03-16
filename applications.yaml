@@ -33,6 +33,6 @@ production:
           - rgbank-appserver-02.pdx.puppet.vm
           - rgbank-appserver-03.pdx.puppet.vm
         Rgbank::Db:
-          - database.pdx.puppet.vm
+          - database-production.pdx.puppet.vm
         Rgbank::Load:
           - rgbank.pdx.puppet.vm
