@@ -1,60 +1,71 @@
-def merge(from, to) {
-  sh('git checkout ' + to)
-  sh('git merge ' + from + ' --ff-only')
-}
-
-def promote(Map parameters = [:]) {
-  String from = parameters.from
-  String to = parameters.to
-
-  merge(from, to)
-
-  sshagent(['control-repo-github']) {
-    sh "git push origin " + to
-  }
-}
+properties([gitLabConnection('gitlab.inf.puppet.vm'), disableConcurrentBuilds()])
+puppet.credentials 'pe-access-token'
 
 node {
-    git branch: 'dev', credentialsId: 'control-repo-github', url: 'git@github.com:puppetlabs/pmm-puppet-site'
+  dir('control-repo') {
+    git url: 'git@gitlab.inf.puppet.vm:rgbank/puppet-control-repo.git', branch: env.BRANCH_NAME
 
-    stage 'Lint and unit tests'
-    withEnv(['PATH+EXTRA=/usr/local/bin']) {
-      sh 'bundle install'
-      sh 'bundle exec rspec spec/'
+    stage('Lint Control Repo'){
+      withEnv(['PATH+EXTRA=/usr/local/bin']) {
+        ansiColor('xterm') {
+          sh(script: '''
+            source ~/.bash_profile
+            rbenv global 2.3.1
+            eval "$(rbenv init -)"
+            bundle install
+            bundle exec rake lint
+          ''')
+        }
+      }
     }
 
-    //Set the Jenkins credentials that hold our Puppet Enterprise RBAC token
-    puppet.credentials 'pe-access-token'
+    stage('Syntax Check Control Repo'){
+      withEnv(['PATH+EXTRA=/usr/local/bin']) {
+        ansiColor('xterm') {
+          sh(script: '''
+            source ~/.bash_profile
+            rbenv global 2.3.1
+            eval "$(rbenv init -)"
+            bundle install
+            bundle exec rake syntax --verbose
+          ''')
+        }
+      }
+    }
 
-    stage 'Deploy to dev'
-    // These methods are provided by the Pipeline: Puppet Enterprise plugin
-    // The `puppetCode` method instructs PE to ensure the latest dev environment code 
-    // is pushed to the Puppet server
-    // The `puppetJob' method instructs PE to run Puppet across the entire dev 
-    // environment.
-    puppet.codeDeploy 'dev'
-    puppet.job 'dev'
+    stage('Validate Puppetfile in Control Repo'){
+      withEnv(['PATH+EXTRA=/usr/local/bin']) {
+        ansiColor('xterm') {
+          sh(script: '''
+            source ~/.bash_profile
+            rbenv global 2.3.1
+            eval "$(rbenv init -)"
+            bundle install
+            bundle exec rake r10k:syntax
+          ''')
+        }
+      }
+    }
 
-    stage 'Promote to staging'
-    input "Ready to deploy to staging?"
-    promote from: 'dev', to: 'staging'
-    
-    stage 'Deploy to staging'
-    puppet.codeDeploy 'staging'
-    puppet.job 'staging'
+    stage("Promote To Environment"){
+      puppet.codeDeploy env.BRANCH_NAME
+    }
+  }
 
-    stage 'Staging acceptance tests'
-    // Run acceptance tests here to make sure no applications are broken
+  if (env.BRANCH_NAME == 'production'){
 
-    stage 'Promote to production'
-    promote from: 'staging', to: 'production'
-    puppet.codeDeploy 'production'
+    stage("Release To DEV"){
+      puppet.job 'production', query: 'facts { name = "appenv" and value = "dev"}'
+    }
 
-    stage 'Noop production run'
-    puppet.job 'production', noop: true
+    stage("Release To QA"){
+      puppet.job 'production', query: 'facts { name = "appenv" and value = "qa"}'
+    }
 
-    stage 'Deploy to production'
-    input "Ready to deploy to production?"
-    puppet.codeDeploy 'production'
-    puppet.job 'production', concurrency: 40
+    stage("Release To Production"){
+      input 'Ready to release to Production'
+      puppet.job 'production', query: 'facts { name = "appenv" and value = "production"}'
+    }
+
+  }
 }
