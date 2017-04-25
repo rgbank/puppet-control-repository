@@ -3,7 +3,7 @@ puppet.credentials 'pe-access-token'
 
 node {
   dir('control-repo') {
-    git url: 'git@gitlab.inf.puppet.vm:rgbank/puppet-control-repo.git', branch: env.BRANCH_NAME
+    git url: 'git@gitlab.inf.puppet.vm:rgbank/puppet-control-repo.git', branch: env.BRANCH_NAME, credentialsId: 'casey-ssh-key'
 
     stage('Lint Control Repo'){
       withEnv(['PATH+EXTRA=/usr/local/bin']) {
