@@ -30,20 +30,20 @@ pipeline {
     }
 
     stage("Promote To Environment"){
-      puppet.codeDeploy env.BRANCH_NAME, credentials: 'pe-access-token'
+      puppetCodeDeploy env.BRANCH_NAME, credentials: 'pe-access-token'
     }
 
     stage("Release To DEV") {
       when { branch "production" }
       steps {
-        puppet.job 'production', query: 'facts { name = "appenv" and value = "dev"}', credentials: 'pe-access-token'
+        puppetJob 'production', query: 'facts { name = "appenv" and value = "dev"}', credentials: 'pe-access-token'
       }
     }
 
     stage("Release To QA"){
       when { branch "production" }
       steps {
-        puppet.job 'production', query: 'facts { name = "appenv" and value = "qa"}', credentials: 'pe-access-token'
+        puppetJob 'production', query: 'facts { name = "appenv" and value = "qa"}', credentials: 'pe-access-token'
       }
     }
 
@@ -51,7 +51,7 @@ pipeline {
       when { branch "production" }
       steps {
         input 'Ready to release to Production?'
-        puppet.job 'production', query: 'facts { name = "appenv" and value = "production"}', credentials: 'pe-access-token'
+        puppetJob 'production', query: 'facts { name = "appenv" and value = "production"}', credentials: 'pe-access-token'
       }
     }
 
