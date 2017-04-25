@@ -21,6 +21,7 @@ pipeline {
     }
 
     stage('Validate Puppetfile in Control Repo'){
+      steps {
         sh(script: '''
           bundle install
           bundle exec rake r10k:syntax
@@ -56,4 +57,3 @@ pipeline {
 
   }
 }
-
