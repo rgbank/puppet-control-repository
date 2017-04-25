@@ -1,8 +1,14 @@
 source 'https://rubygems.org'
 
-group :test do
-  gem 'semantic_puppet'
-  gem 'puppet'
-  gem 'rspec'
-  gem 'rake'
+case RUBY_PLATFORM
+when /darwin/
+    gem 'CFPropertyList'
 end
+
+gem 'puppet'
+gem 'puppetlabs_spec_helper'
+gem 'ra10ke'
+gem 'rubocop'
+gem 'rugged'
+gem 'rspec'
+gem 'rake'
