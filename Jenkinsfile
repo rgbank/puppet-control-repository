@@ -3,11 +3,11 @@ puppet.credentials 'pe-access-token'
 
 node {
   dir('rbenv') {
-    git url: 'git://github.com/sstephenson/rbenv.git'
+    git url: 'https://github.com/sstephenson/rbenv.git'
   }
 
   dir('ruby-build') {
-    git url: 'git clone https://github.com/rbenv/ruby-build.git'
+    git url: 'https://github.com/rbenv/ruby-build.git'
   }
 
   dir('control-repo') {
