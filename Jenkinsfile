@@ -30,7 +30,9 @@ pipeline {
     }
 
     stage("Promote To Environment"){
-      puppetCodeDeploy env.BRANCH_NAME, credentials: 'pe-access-token'
+      steps {
+        puppetCodeDeploy env.BRANCH_NAME, credentials: 'pe-access-token'
+      }
     }
 
     stage("Release To DEV") {
