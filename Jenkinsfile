@@ -1,5 +1,5 @@
 pipeline {
-  agent { docker 'ruby:2.3' }
+  agent  { dockerfile true }
 
   stages {
     stage('Lint Control Repo') {
