@@ -1,9 +1,6 @@
 pipeline {
   agent { docker 'ruby:2.3' }
 
-  dir('control-repo') {
-    git url: 'http://gitlab.inf.puppet.vm/rgbank/pmm-puppet-site.git', branch: env.BRANCH_NAME, credentialsId: 'casey-gitlab-credentials'
-
   stages {
     stage('Lint Control Repo') {
       steps {
