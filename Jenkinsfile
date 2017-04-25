@@ -2,14 +2,22 @@ properties([gitLabConnection('gitlab.inf.puppet.vm'), disableConcurrentBuilds()]
 puppet.credentials 'pe-access-token'
 
 node {
+  dir('rbenv') {
+    git url: 'git://github.com/sstephenson/rbenv.git'
+  }
+
+  dir('ruby-build') {
+    git url: 'git clone https://github.com/rbenv/ruby-build.git'
+  }
+
   dir('control-repo') {
     git url: 'http://gitlab.inf.puppet.vm/rgbank/pmm-puppet-site.git', branch: env.BRANCH_NAME, credentialsId: 'casey-gitlab-credentials'
 
     stage('Lint Control Repo'){
-      withEnv(['PATH+EXTRA=/usr/local/bin']) {
+      withEnv(['PATH+EXTRA=/usr/local/bin:../rbenv/bin:../ruby-build/bin']) {
         ansiColor('xterm') {
           sh(script: '''
-            source ~/.bash_profile
+            rbenv install 2.3.1
             rbenv global 2.3.1
             eval "$(rbenv init -)"
             bundle install
@@ -23,7 +31,7 @@ node {
       withEnv(['PATH+EXTRA=/usr/local/bin']) {
         ansiColor('xterm') {
           sh(script: '''
-            source ~/.bash_profile
+            rbenv install 2.3.1
             rbenv global 2.3.1
             eval "$(rbenv init -)"
             bundle install
@@ -37,7 +45,7 @@ node {
       withEnv(['PATH+EXTRA=/usr/local/bin']) {
         ansiColor('xterm') {
           sh(script: '''
-            source ~/.bash_profile
+            rbenv install 2.3.1
             rbenv global 2.3.1
             eval "$(rbenv init -)"
             bundle install
