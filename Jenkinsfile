@@ -22,14 +22,14 @@ pipeline {
 
     stage("Promote To Environment"){
       steps {
-        puppetCodeDeploy branch, credentials: 'pe-access-token'
+        puppetCodeDeploy(environments: [branch], credentials: 'pe-access-token')
       }
     }
 
     stage("Release To DEV") {
       when { branch "production" }
       steps {
-        puppetJob environment: 'production', query: 'facts { name = "appenv" and value = "dev"}', credentialsId: 'pe-access-token'
+        puppetJob(environment: 'production', query: 'facts { name = "appenv" and value = "dev"}', credentialsId: 'pe-access-token'
       }
     }
 
