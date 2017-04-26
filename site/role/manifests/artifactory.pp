@@ -1,3 +1,3 @@
 class role::artifactory {
-  class { artifactory: }
+  class { "artifactory": }
 }

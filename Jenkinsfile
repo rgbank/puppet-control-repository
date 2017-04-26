@@ -1,71 +1,51 @@
-properties([gitLabConnection('gitlab.inf.puppet.vm'), disableConcurrentBuilds()])
-puppet.credentials 'pe-access-token'
+pipeline {
+  agent  { dockerfile true }
 
-node {
-  dir('control-repo') {
-    git url: 'git@gitlab.inf.puppet.vm:rgbank/puppet-control-repo.git', branch: env.BRANCH_NAME
-
-    stage('Lint Control Repo'){
-      withEnv(['PATH+EXTRA=/usr/local/bin']) {
-        ansiColor('xterm') {
-          sh(script: '''
-            source ~/.bash_profile
-            rbenv global 2.3.1
-            eval "$(rbenv init -)"
-            bundle install
-            bundle exec rake lint
-          ''')
-        }
-      }
-    }
-
+  stages {
     stage('Syntax Check Control Repo'){
-      withEnv(['PATH+EXTRA=/usr/local/bin']) {
-        ansiColor('xterm') {
-          sh(script: '''
-            source ~/.bash_profile
-            rbenv global 2.3.1
-            eval "$(rbenv init -)"
-            bundle install
-            bundle exec rake syntax --verbose
-          ''')
-        }
+      steps {
+        sh(script: '''
+          bundle install
+          bundle exec rake syntax --verbose
+        ''')
       }
     }
 
     stage('Validate Puppetfile in Control Repo'){
-      withEnv(['PATH+EXTRA=/usr/local/bin']) {
-        ansiColor('xterm') {
-          sh(script: '''
-            source ~/.bash_profile
-            rbenv global 2.3.1
-            eval "$(rbenv init -)"
-            bundle install
-            bundle exec rake r10k:syntax
-          ''')
-        }
+      steps {
+        sh(script: '''
+          bundle install
+          bundle exec rake r10k:syntax
+        ''')
       }
     }
 
     stage("Promote To Environment"){
-      puppet.codeDeploy env.BRANCH_NAME
+      steps {
+        puppetCode(environment: env.BRANCH_NAME, credentialsId: 'pe-access-token')
+      }
     }
-  }
 
-  if (env.BRANCH_NAME == 'production'){
-
-    stage("Release To DEV"){
-      puppet.job 'production', query: 'facts { name = "appenv" and value = "dev"}'
+    stage("Release To DEV") {
+      when { branch "production" }
+      steps {
+        puppetJob(environment: 'production', query: 'facts { name = "environment" and value = "dev"}', credentialsId: 'pe-access-token')
+      }
     }
 
     stage("Release To QA"){
-      puppet.job 'production', query: 'facts { name = "appenv" and value = "qa"}'
+      when { branch "production" }
+      steps {
+        puppetJob(environment: 'production', query: 'facts { name = "environment" and value = "qa"}', credentialsId: 'pe-access-token')
+      }
     }
 
     stage("Release To Production"){
-      input 'Ready to release to Production'
-      puppet.job 'production', query: 'facts { name = "appenv" and value = "production"}'
+      when { branch "production" }
+      steps {
+        input 'Ready to release to Production?'
+        puppetJob(environment: 'production', query: 'facts { name = "environment" and value = "production"}', credentialsId: 'pe-access-token')
+      }
     }
-
   }
 }
