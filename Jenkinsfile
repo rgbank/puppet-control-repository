@@ -22,6 +22,7 @@ pipeline {
 
     stage("Promote To Environment"){
       steps {
+        sh("echo hello")
         puppetCode(environment: [branch], credentialsId: 'pe-access-token')
       }
     }
