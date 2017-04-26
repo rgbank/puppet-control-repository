@@ -2,15 +2,6 @@ pipeline {
   agent  { dockerfile true }
 
   stages {
-    stage('Lint Control Repo') {
-      steps {
-        sh(script: '''
-          bundle install
-          bundle exec rake lint
-        ''')
-      }
-    }
-
     stage('Syntax Check Control Repo'){
       steps {
         sh(script: '''
