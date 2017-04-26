@@ -1,0 +1,82 @@
+node {
+  try {
+    updateGitlabCommitStatus(name: 'build', state: 'running')
+
+    checkout changelog: true,
+      poll: false,
+      scm: [$class: 'GitSCM',
+        branches: [[
+                    name: 'origin/${gitlabSourceBranch}']],
+                    doGenerateSubmoduleConfigurations: false,
+                    extensions: [[
+                                  $class: 'PreBuildMerge',
+                                  options: [
+                                    fastForwardMode: 'FF',
+                                    mergeRemote: 'origin',
+                                    mergeStrategy: 'default',
+                                    mergeTarget: '${gitlabTargetBranch}'
+                                  ]
+                    ]],
+        submoduleCfg: [],
+        userRemoteConfigs: [[
+                              credentialsId: '8ff77aa3-5379-42e9-8a98-869192b693c8',
+                              name: 'origin',
+                              refspec: '+refs/heads/*:refs/remotes/origin/* +refs/merge-requests/*/head:refs/remotes/origin/merge-requests/*',
+                              url: 'git@gitlab.inf.puppet.vm:rgbank/puppet-control-repository.git'
+                            ]]
+      ]
+
+
+    stage('Lint Control Repo'){
+      withEnv(['PATH+EXTRA=/usr/local/bin']) {
+        ansiColor('xterm') {
+          sh(script: '''
+            source ~/.bash_profile
+            rbenv global 2.3.1
+            eval "$(rbenv init -)"
+            bundle install
+            bundle exec rake lint
+          ''')
+        }
+      }
+    }
+
+    stage('Syntax Check Control Repo'){
+      withEnv(['PATH+EXTRA=/usr/local/bin']) {
+        ansiColor('xterm') {
+          sh(script: '''
+            source ~/.bash_profile
+            rbenv global 2.3.1
+            eval "$(rbenv init -)"
+            bundle install
+            bundle exec rake syntax --verbose
+          ''')
+        }
+      }
+    }
+
+    stage('Validate Puppetfile in Control Repo'){
+      withEnv(['PATH+EXTRA=/usr/local/bin']) {
+        ansiColor('xterm') {
+          sh(script: '''
+            source ~/.bash_profile
+            rbenv global 2.3.1
+            eval "$(rbenv init -)"
+            bundle install
+            bundle exec rake r10k:syntax
+          ''')
+        }
+      }
+    }
+
+    currentBuild.result = 'SUCCESS'
+    updateGitlabCommitStatus(name: 'build', state: 'success')
+    addGitLabMRComment comment: "Jenkins build $currentBuild.result"
+
+  } catch(error) {
+    updateGitlabCommitStatus(name: 'build', state: 'failed')
+    addGitLabMRComment comment: "Jenkins build $currentBuild.result\n$error"
+    currentBuild.result = 'FAILURE'
+  }
+}
+
