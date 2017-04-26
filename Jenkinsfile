@@ -29,14 +29,14 @@ pipeline {
     stage("Release To DEV") {
       when { branch "production" }
       steps {
-        puppetJob(environment: 'production', query: 'facts { name = "appenv" and value = "dev"}', credentialsId: 'pe-access-token')
+        puppetJob(environment: 'production', query: 'facts { name = "environment" and value = "dev"}', credentialsId: 'pe-access-token')
       }
     }
 
     stage("Release To QA"){
       when { branch "production" }
       steps {
-        puppetJob(environment: 'production', query: 'facts { name = "appenv" and value = "qa"}', credentialsId: 'pe-access-token')
+        puppetJob(environment: 'production', query: 'facts { name = "environment" and value = "qa"}', credentialsId: 'pe-access-token')
       }
     }
 
@@ -44,9 +44,8 @@ pipeline {
       when { branch "production" }
       steps {
         input 'Ready to release to Production?'
-        puppetJob(environment: 'production', query: 'facts { name = "appenv" and value = "production"}', credentialsId: 'pe-access-token')
+        puppetJob(environment: 'production', query: 'facts { name = "environment" and value = "production"}', credentialsId: 'pe-access-token')
       }
     }
-
   }
 }
