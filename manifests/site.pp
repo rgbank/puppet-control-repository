@@ -58,17 +58,6 @@ node /^rgbank-web.*dockerbuilder/ {
 site {
   $environment = get_compiler_environment()
 
-  if $environment == 'produciton' {
-    rgbank { 'getting-started':
-      listen_port => 8010,
-      nodes => {
-        Node['database.vm'] => [Rgbank::Db[getting-started]],
-        Node['appserver01.vm'] => [Rgbank::Web[appserver-01_getting-started]],
-        Node['loadbalancer.vm'] => [Rgbank::Load[getting-started]],
-      },
-    }
-  }
-
   # Dynamic application declarations
   # from JSON
   $envs = loadyaml("/etc/puppetlabs/code/environments/${environment}/applications.yaml")
@@ -87,6 +76,7 @@ site {
         }
       }
 
+      fail 'here'
       create_component_app($type, $title, $application_parameters)
 
       #$parsed_parameters = $params.make_application_parameters($title)
