@@ -77,17 +77,14 @@ site {
   $applications.each |String $type, $instances| {
     $instances.each |String $title, $params| {
       $application_parameters = { 'components' =>  {} }
+      $application_parameters.merge($params['parameters'])
 
       $params['components'].each |String $component, String $component_criteria| {
         if ($component_criteria['query']) {
-          $application_parameters['components'][$component] = puppetdb_query($component_criteria['query'])
+          $application_parmaeters['components'].merge( {$component => puppetdb_query($component_criteria['query'])} )
         } elsif ($component_criteria['nodes']) {
-          $application_parameters['components'][$component] = $component_criteria['nodes']
+          $application_parmaeters['components'].merge( {$component => $component_criteria['nodes']} )
         }
-      }
-
-      $params['parameters'].each |String $parameter, $value| {
-        $application_parameters[$parameter] = $value
       }
 
       create_component_app($type, $title, $application_parameters)
