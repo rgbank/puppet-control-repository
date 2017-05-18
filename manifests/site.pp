@@ -76,14 +76,30 @@ site {
 
   $applications.each |String $type, $instances| {
     $instances.each |String $title, $params| {
-      $parsed_parameters = $params.make_application_parameters($title)
+      $application_parameters = { 'components' =>  {} }
+
+      $params['components'].each |String $component, String $component_criteria| {
+        if ($component_criteria['query']) {
+          $application_parameters['components'][$component] = puppetdb_query($component_criteria['query'])
+        } elsif ($component_criteria['nodes']) {
+          $application_parameters['components'][$component] = $component_criteria['nodes']
+        }
+      }
+
+      $params['parameters'].each |String $parameter, $value| {
+        $application_parameters[$parameter] = $value
+      }
+
+      create_component_app($type, $title, $application_parameters)
+
+      #$parsed_parameters = $params.make_application_parameters($title)
 
       # Because Puppet code expects typed parameters, not just strings representing
       # types, an appropriately transformed version of the $params variable will be
       # used. The resolve_resources() method comes from the tse/to_resource module.
-      Resource[$type] { $title:
-        * => $parsed_parameters.resolve_resources
-      }
+      #Resource[$type] { $title:
+      #*                                       => $parsed_parameters.resolve_resources
+      #}
     }
   }
 }
