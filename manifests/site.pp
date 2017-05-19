@@ -70,7 +70,6 @@ site {
       $result = $params['components'].map |$component, $component_criteria| {
         if ($component_criteria['query']) {
           {$component => puppetdb_query($component_criteria['query']).map |$value| { $value['certname'] }}
-          fail $application_parameters
         } elsif ($component_criteria['nodes']) {
           {$component => $component_criteria['nodes']}
         }
