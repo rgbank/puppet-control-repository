@@ -67,8 +67,8 @@ site {
       $application_parameters = { 'components' =>  {} }
       $application_parameters.merge($params['parameters'])
 
-      $params['components'].each |$index, $value| {
-        fail $index
+      $params['components'].each |String $index, $value| {
+        fail $value
       }
 
       $params['components'].each |String $component, Hash $component_criteria| {
