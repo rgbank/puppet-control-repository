@@ -75,6 +75,7 @@ site {
         }
       }
 
+      fail $application_parameters
       create_component_app($type, $title, $application_parameters)
 
       #$parsed_parameters = $params.make_application_parameters($title)
