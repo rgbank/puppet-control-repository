@@ -67,16 +67,16 @@ site {
       $application_parameters = { 'components' =>  {} }
       $application_parameters.merge($params['parameters'])
 
-      $params['components'].each |$component, $component_criteria| {
+      $result = $params['components'].map |$component, $component_criteria| {
         if ($component_criteria['query']) {
-          $application_parameters['components'].merge( {$component => puppetdb_query($component_criteria['query']).map |$value| { $value['certname'] } } )
+          {$component => puppetdb_query($component_criteria['query']).map |$value| { $value['certname'] }}
           fail $application_parameters
         } elsif ($component_criteria['nodes']) {
-          $application_parameters['components'].merge( {$component => $component_criteria['nodes']} )
+          {$component => $component_criteria['nodes']}
         }
       }
 
-      create_component_app($type, $title, $application_parameters)
+      create_component_app($type, $title, $result)
 
       #$parsed_parameters = $params.make_application_parameters($title)
 
