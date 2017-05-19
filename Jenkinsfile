@@ -29,7 +29,7 @@ pipeline {
     stage("Release To QA"){
       when { branch "production" }
       steps {
-        puppetJob(environment: 'production', query: 'facts { name = "trusted.extensions.pp_environment" and value = "staging"}', credentialsId: 'pe-access-token')
+        puppetJob(environment: 'production', query: 'inventory[certname] { trusted.extensions.pp_environment = "staging"}', credentialsId: 'pe-access-token')
       }
     }
 
@@ -37,7 +37,7 @@ pipeline {
       when { branch "production" }
       steps {
         input 'Ready to release to Production?'
-        puppetJob(environment: 'production', query: 'facts { name = "trusted.extensions.pp_environment" and value = "production"}', credentialsId: 'pe-access-token')
+        puppetJob(environment: 'production', query: 'inventory[certname] { trusted.extensions.pp_environment = "production"}', credentialsId: 'pe-access-token')
       }
     }
   }
