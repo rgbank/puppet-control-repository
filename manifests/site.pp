@@ -64,27 +64,26 @@ site {
 
   $applications.each |String $type, $instances| {
     $instances.each |String $title, $params| {
-      $application_parameters = { 'components' =>  {} }
-      $application_parameters.merge($params['parameters'])
 
-      $result = $params['components'].map |$component, $component_criteria| {
+      if $params['parameters'] {
+        $param_hash = $params['parameters'].map |$key, $value| {
+          {$key => $value}
+        }.to_hash
+      } else {
+        $param_hash = {}
+      }
+
+      $component_hash = { 'components' => $params['components'].map |$component, $component_criteria| {
         if ($component_criteria['query']) {
           {$component => puppetdb_query($component_criteria['query']).map |$value| { $value['certname'] }}
         } elsif ($component_criteria['nodes']) {
           {$component => $component_criteria['nodes']}
         }
-      }.to_hash
+      }.to_hash  }
+
+      $result = Hash.new( $param_hash + $component_hash)
 
       create_component_app($type, $title, $result)
-
-      #$parsed_parameters = $params.make_application_parameters($title)
-
-      # Because Puppet code expects typed parameters, not just strings representing
-      # types, an appropriately transformed version of the $params variable will be
-      # used. The resolve_resources() method comes from the tse/to_resource module.
-      #Resource[$type] { $title:
-      #*                                       => $parsed_parameters.resolve_resources
-      #}
     }
   }
 }

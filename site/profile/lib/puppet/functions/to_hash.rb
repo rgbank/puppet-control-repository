@@ -7,7 +7,13 @@ Puppet::Functions.create_function(:to_hash) do
   end
 
   def to_hash(array)
-    Hash[*array.flatten]
+    h = Hash.new
+
+    array.each do |value|
+      h[value.keys[0]] = value.values[0]
+    end
+
+    h
   end
 end
 # vim: set ts=2 sw=2 et :
