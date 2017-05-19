@@ -73,7 +73,7 @@ site {
         } elsif ($component_criteria['nodes']) {
           {$component => $component_criteria['nodes']}
         }
-      }.array2hash
+      }.to_hash
 
       create_component_app($type, $title, $result)
 
