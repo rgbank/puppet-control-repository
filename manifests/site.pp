@@ -60,8 +60,7 @@ site {
 
   # Dynamic application declarations
   # from JSON
-  $envs = loadyaml("/etc/puppetlabs/code/environments/${environment}/applications.yaml")
-  $applications = pick_default($envs[$environment], {})
+  $applications = loadyaml("/etc/puppetlabs/code/environments/${environment}/applications.yaml")
 
   $applications.each |String $type, $instances| {
     $instances.each |String $title, $params| {
@@ -76,7 +75,6 @@ site {
         }
       }
 
-      fail 'here'
       create_component_app($type, $title, $application_parameters)
 
       #$parsed_parameters = $params.make_application_parameters($title)
