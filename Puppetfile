@@ -47,7 +47,7 @@ mod 'rgbank',
 
 # Community Modules
 mod 'stahnma/epel', '1.0.0'
-mod 'puppet/nginx', '0.4.0'
+mod 'puppet/nginx', '0.6.0'
 mod 'puppet/iis', '2.0.2'
 mod 'puppet/windowsfeature', '2.0.0'
 mod 'seteam/tomcat', '0.1.0'
