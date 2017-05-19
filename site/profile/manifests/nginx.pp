@@ -3,9 +3,7 @@ class profile::nginx {
     composer => false,
   }
   class { 'nginx': 
-    http_cfg_append => {
-      names_hash_bucket_size => 128,
-    },
+    names_hash_bucket_size => 128,
   }
 
   Class['php'] -> Class['nginx']
