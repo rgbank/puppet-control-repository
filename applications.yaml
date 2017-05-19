@@ -21,5 +21,9 @@ rgbank:
         query: "inventory[certname] { facts.trusted.extensions.pp_application = \"rgbank\" and facts.trusted.extensions.pp_environment = \"staging\" and facts.trusted.extensions.pp_apptier = \"loadbalancer\" }"
   dev:
     components:
-      ['Rgbank::Web','Rgbank::Db', 'Rgbank::Load']:
+      Rgbank::Web:
+        query: "inventory[certname] { facts.trusted.extensions.pp_application = \"rgbank\" and facts.trusted.extensions.pp_environment = \"development\" and facts.trusted.extensions.pp_apptier = \"all\" }"
+      Rgbank::Db: 
+        query: "inventory[certname] { facts.trusted.extensions.pp_application = \"rgbank\" and facts.trusted.extensions.pp_environment = \"development\" and facts.trusted.extensions.pp_apptier = \"all\" }"
+      Rgbank::Load:
         query: "inventory[certname] { facts.trusted.extensions.pp_application = \"rgbank\" and facts.trusted.extensions.pp_environment = \"development\" and facts.trusted.extensions.pp_apptier = \"all\" }"
