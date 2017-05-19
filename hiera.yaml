@@ -1,0 +1,12 @@
+---
+
+version: 5
+
+hierarchy:
+  - name: "Jenkins Hiera plugin lookup"
+    lookup_key: hiera_http
+    uris:
+      - http://jenkins.inf.puppet.vm:8080/hiera/lookup?scope=%{::trusted.extensions.pp_environment}&key=%{key}
+    options:
+      output: json
+      ignore_404: true
