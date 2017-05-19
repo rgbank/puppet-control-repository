@@ -42,7 +42,7 @@ mod 'app_modeling',
   :git => 'https://github.com/puppetlabs/puppetlabs-app_modeling'
 
 mod 'rgbank',
-  :git => 'https://github.com/puppetlabs/puppetlabs-rgbank.git',
+  :git => 'http://gitlab.inf.puppet.vm/rgbank/puppetlabs-rgbank.git',
   :ref => 'use_artifactory_artifact'
 
 # Community Modules
