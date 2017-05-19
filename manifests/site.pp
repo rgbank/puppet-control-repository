@@ -67,7 +67,7 @@ site {
       $application_parameters = { 'components' =>  {} }
       $application_parameters.merge($params['parameters'])
 
-      $params['components'].each |String $component, String $component_criteria| {
+      $params['components'].each |String $component, Hash $component_criteria| {
         if ($component_criteria['query']) {
           $application_parmaeters['components'].merge( {$component => puppetdb_query($component_criteria['query'])} )
         } elsif ($component_criteria['nodes']) {
