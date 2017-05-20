@@ -77,7 +77,6 @@ mod 'puppetlabs-mount_iso', '0.1.0'
 mod 'cyberious-pget', '1.1.0'
 mod 'trlinkin/domain_membership', '1.1.1'
 mod 'evenup-artifactory', '2.0.0'
-mod 'crayfishx/hiera_http'
 
 # Puppetconf registry, wsus, powershell, chocolatey demo
 
