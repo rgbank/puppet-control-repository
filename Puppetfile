@@ -43,7 +43,7 @@ mod 'app_modeling',
 
 mod 'rgbank',
   :git => 'http://gitlab.inf.puppet.vm/rgbank/puppetlabs-rgbank.git',
-  :ref => 'make_load_optional'
+  :ref => '505c9f063c97427227be50f3eb460950d4a3bea5'
 
 # Community Modules
 mod 'stahnma/epel', '1.0.0'
