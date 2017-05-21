@@ -37,7 +37,7 @@ rgbank:
           facts.trusted.extensions.pp_application = \"rgbank\" and
           facts.trusted.extensions.pp_environment = \"staging\" and
           facts.trusted.extensions.pp_apptier = \"loadbalancer\" }"
-  dev:
+  development:
     components:
       Rgbank::Web:
         query: "inventory[certname] {
