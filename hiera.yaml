@@ -15,17 +15,17 @@ hierarchy:
     path: "nodes/%{trusted.certname}.yaml"
 
   - name: "Per-datacenter business group data"
-    path: "datacenter/%{facts.extensions.pp_datacenter}.yaml"
+    path: "datacenter/%{trusted.extensions.pp_datacenter}.yaml"
 
   - name: "Per-datacenter secret data (encrypted)"
     lookup_key: eyaml_lookup_key
-    path: "secrets/%{facts.extensions.pp_datacenter}.eyaml"
+    path: "secrets/%{trusted.extensions.pp_datacenter}.eyaml"
     options:
       pkcs7_private_key: /etc/puppetlabs/puppet/eyaml/private_key.pkcs7.pem
       pkcs7_public_key:  /etc/puppetlabs/puppet/eyaml/public_key.pkcs7.pem
 
   - name: "Per-environment data"
-    path: "environment/%{facts.extensions.pp_environment}.yaml"
+    path: "environment/%{trusted.extensions.pp_environment}.yaml"
 
   - name: "Per-OS defaults"
     path: "os/%{facts.os.family}.yaml"
