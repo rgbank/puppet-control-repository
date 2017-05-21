@@ -51,9 +51,3 @@ rgbank:
           facts.trusted.extensions.pp_environment = \"development\" and
           facts.trusted.extensions.pp_apptier = \"all\" and
           nodes { deactivated is null } }"
-      Rgbank::Load:
-        query: "inventory[certname] {
-          facts.trusted.extensions.pp_application = \"rgbank\" and
-          facts.trusted.extensions.pp_environment = \"development\" and
-          facts.trusted.extensions.pp_apptier = \"all\" and
-          nodes { deactivated is null } }"
