@@ -4,7 +4,6 @@ class profile::nginx {
   }
   class { 'nginx': 
     names_hash_bucket_size => 128,
-    use_default_location   => false,
   }
 
   Class['php'] -> Class['nginx']
