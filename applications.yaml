@@ -39,7 +39,7 @@ rgbank:
           facts.trusted.extensions.pp_apptier = \"loadbalancer\" }"
   dev:
     parameters:
-      listen_port: 80
+      listen_port: 8080
     components:
       Rgbank::Web:
         query: "inventory[certname] {
