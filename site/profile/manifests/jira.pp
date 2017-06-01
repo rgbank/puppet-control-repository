@@ -4,21 +4,19 @@ class profile::jira(
 ) {
   class { 'jira':
     javahome   => '/usr/lib/jvm/jre/',
-    db         => 'mysql',
+    db         => 'postgresql',
     dbname     => 'jira',
-    dbport     => '3306',
+    dbport     => '5432',
     dbuser     => $dbuser,
     dbpassword => $dbpass,
-    dbdriver   => 'com.mysql.jdbc.Driver',
-    dbtype     => 'mysql',
+    dbdriver   => 'org.postgresql.Driver',
+    dbtype     => 'postgres72',
   }
 
   class { 'jira::facts': }
 
-  mysql::db { 'jira':
+  postgresql::server::db { 'jira':
     user     => $dbuser,
-    password => $dbpass,
-    host     => 'localhost',
-    grant    => ['ALL'],
+    password => postgresql_password($dbuser, $dbpass),
   }
 }
