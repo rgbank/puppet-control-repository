@@ -1,6 +1,6 @@
 class profile::jira {
   class { 'jira':
-      javahome =>  '/opt/java',
+      javahome =>  '/usr/lib/jvm/jre/',
   }
 
   class { 'jira::facts': }
