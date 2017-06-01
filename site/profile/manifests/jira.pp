@@ -3,8 +3,10 @@ class profile::jira(
   $dbpass,
 ) {
   class { 'jira':
-    javahome => '/usr/lib/jvm/jre/',
-    db       => 'mysql',
+    javahome   => '/usr/lib/jvm/jre/',
+    db         => 'mysql',
+    dbuser     => $dbuser,
+    dbpassword => $dbpass,
   }
 
   class { 'jira::facts': }
