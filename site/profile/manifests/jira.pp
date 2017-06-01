@@ -17,5 +17,6 @@ class profile::jira(
     user     => $dbuser,
     password => $dbpass,
     host     => 'localhost',
+    grant    => ['*.*'],
   }
 }
