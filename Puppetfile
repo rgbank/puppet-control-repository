@@ -37,6 +37,7 @@ mod 'puppetlabs/haproxy', '1.5.0'
 mod 'tse/to_resource', '0.1.2'
 mod 'puppetlabs/vsphere'
 mod 'puppetlabs/chocolatey', '2.0.0'
+mod 'puppetlabs-postgresql', '4.9.0'
 
 mod 'app_modeling',
   :git => 'https://github.com/puppetlabs/puppetlabs-app_modeling'
