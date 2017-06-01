@@ -7,6 +7,7 @@ class profile::jira(
     db         => 'mysql',
     dbuser     => $dbuser,
     dbpassword => $dbpass,
+    dbtype     => 'mysql',
   }
 
   class { 'jira::facts': }
