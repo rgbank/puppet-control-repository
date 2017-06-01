@@ -10,7 +10,6 @@ class profile::jira(
   }
 
   class { 'jira::facts': }
-  class { 'jira::mysql_connector': }
 
   mysql::db { 'jira':
     user     => $dbuser,
