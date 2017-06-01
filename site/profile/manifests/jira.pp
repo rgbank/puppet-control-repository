@@ -7,6 +7,7 @@ class profile::jira(
     db         => 'mysql',
     dbuser     => $dbuser,
     dbpassword => $dbpass,
+    dbdriver   => 'com.mysql.jdbc.Driver',
     dbtype     => 'mysql',
   }
 
