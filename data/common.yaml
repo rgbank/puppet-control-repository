@@ -11,3 +11,5 @@ secret_content: ENC[PKCS7,MIIBeQYJKoZIhvcNAQcDoIIBajCCAWYCAQAxggEhMIIBHQIBADAFMA
 arbitrary_data: "The quick brown fox jumped over the lazy dog."
 puppet_enterprise::master::puppetserver::pre_commit_hook_commands: []
 rgbank::artifactory_server: '192.168.0.131:8081'
+profile::jira::dbuser: 'jira'
+profile::jria::dbpass: 'mypassword'
