@@ -49,7 +49,7 @@ node default { }
 
 # Docker images
 node /^rgbank-web.*dockerbuilder/ {
-  include role::rgbank::web
+  include role::rgbank::web_docker
 }
 
 # APPLICATIONS
