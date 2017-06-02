@@ -5,8 +5,11 @@ version: 5
 hierarchy:
   - name: "Jenkins Hiera plugin lookup"
     lookup_key: hiera_jenkins
-    paths:
+    uris:
       - "jenkins://lookup/%{::trusted.extensions.pp_environment}"
+    options:
+      host: 'jenkins.inf.puppet.vm'
+      port: 8080
 
   - name: "Per-node data"
     path: "nodes/%{trusted.certname}.yaml"
