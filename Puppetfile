@@ -11,6 +11,7 @@
 forge "https://forgeapi.puppetlabs.com"
 
 # PL Modules
+mod 'puppetlabs/dummy_service'
 mod 'puppetlabs/pe_upgrade'
 mod 'puppetlabs/java', '2.0.0'
 mod 'puppetlabs/git', '0.2.0'
