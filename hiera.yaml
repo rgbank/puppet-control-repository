@@ -6,7 +6,7 @@ hierarchy:
   - name: "Jenkins Hiera plugin lookup"
     lookup_key: hiera_jenkins
     paths:
-      - "%{::trusted.extensions.pp_environment}"
+      - "jenkins://lookup/%{::trusted.extensions.pp_environment}"
 
   - name: "Per-node data"
     path: "nodes/%{trusted.certname}.yaml"
