@@ -21,7 +21,6 @@ rgbank:
     parameters:
       db_username: 'staginguser'
       db_password: 'myawesomepassword'
-      use_docker: true
     components:
       Rgbank::Web:
         query: "inventory[certname] {
@@ -39,6 +38,8 @@ rgbank:
           facts.trusted.extensions.pp_environment = \"staging\" and
           facts.trusted.extensions.pp_apptier = \"loadbalancer\" }"
   dev:
+    parameters:
+      use_docker: true
     components:
       Rgbank::Web:
         query: "inventory[certname] {
