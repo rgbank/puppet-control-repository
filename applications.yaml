@@ -21,6 +21,7 @@ rgbank:
     parameters:
       db_username: 'staginguser'
       db_password: 'myawesomepassword'
+      use_docker: true
     components:
       Rgbank::Web:
         query: "inventory[certname] {
