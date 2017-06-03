@@ -1,2 +1,2 @@
 ---
-rgbank::web::enable_header: true
+rgbank::web::enable_header: false
