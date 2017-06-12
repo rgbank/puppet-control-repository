@@ -10,6 +10,7 @@ hierarchy:
     options:
       host: 'jenkins.inf.puppet.vm'
       port: 8080
+      failure: "graceful"
 
   - name: "Per-node data"
     path: "nodes/%{trusted.certname}.yaml"
