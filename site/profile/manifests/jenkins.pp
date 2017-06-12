@@ -9,6 +9,8 @@ class profile::jenkins {
   jenkins::plugin { 'workflow-support': }
   jenkins::plugin { 'workflow-cps': }
   jenkins::plugin { 'workflow-durable-task-step': }
+  jenkins::plugin { 'workflow-api': }
+  jenkins::plugin { 'workflow-basic-steps': }
   jenkins::plugin { 'ace-editor': }
   jenkins::plugin { 'bouncycastle-api': }
   jenkins::plugin { 'display-url-api': }
@@ -16,13 +18,9 @@ class profile::jenkins {
   jenkins::plugin { 'jquery-detached': }
   jenkins::plugin { 'mailer': }
   jenkins::plugin { 'scm-api': }
-  jenkins::plugin { 'script-security': version => '1.28', }
-  jenkins::plugin { 'plain-credentials': version => '1.4', }
-  jenkins::plugin { 'structs': version => '1.7', }
-  jenkins::plugin { 'workflow-api': version => '2.17', }
-  jenkins::plugin { 'workflow-basic-steps': version => '2.5', }
-  jenkins::plugin { 'workflow-cps': version  => '2.17', }
-  jenkins::plugin { 'workflow-durable-task-step': version =>  '2.4', }
+  jenkins::plugin { 'script-security': }
+  jenkins::plugin { 'plain-credentials': }
+  jenkins::plugin { 'structs': }
   jenkins::plugin { 'copyartifact': }
   jenkins::plugin { 'matrix-project': }
   jenkins::plugin { 'git': }
