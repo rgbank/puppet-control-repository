@@ -4,12 +4,6 @@ class profile::jenkins {
     configure_firewall => true,
   }
 
-  #jenkins::job { "control-repo":
-  #  ensure                                               => present,
-  #  enabled                                              => true,
-  #  config                                               => epp('profile/jenkins_job_config.epp'),
-  #}
-
   jenkins::plugin { 'workflow-scm-step': }
   jenkins::plugin { 'workflow-step-api': }
   jenkins::plugin { 'workflow-support': }
