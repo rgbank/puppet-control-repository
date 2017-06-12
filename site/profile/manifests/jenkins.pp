@@ -7,6 +7,8 @@ class profile::jenkins {
   jenkins::plugin { 'workflow-scm-step': }
   jenkins::plugin { 'workflow-step-api': }
   jenkins::plugin { 'workflow-support': }
+  jenkins::plugin { 'workflow-cps': }
+  jenkins::plugin { 'workflow-durable-task-step': }
   jenkins::plugin { 'ace-editor': }
   jenkins::plugin { 'bouncycastle-api': }
   jenkins::plugin { 'display-url-api': }
