@@ -103,8 +103,8 @@ site {
       next()
     }
 
-    $app_type  = $app.split('[')[0].downcase()
-    $app_title = $app.split('[')[1].chop().downcase()
+    $app_type  = $app.split('\[')[0].downcase()
+    $app_title = $app.split('\[')[1].chop().downcase()
 
     #Skip if the app is already defined in the applications.yaml file
     if $applications[$app_type][$app_title] {
