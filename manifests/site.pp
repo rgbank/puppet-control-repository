@@ -86,4 +86,37 @@ site {
       create_component_app($type, $title, $result)
     }
   }
+
+
+  # Dynamic application declarations
+  # from hosts themselves
+  $nodes = puppetdb_query('inventory[facts] { fact_contents { path ~> ["trusted","extensions","pp_application"] } }')
+
+  $host_defined_apps = $nodes.map |$node| {
+    $node[facts][trusted][extensions][pp_application]
+  }.unique
+
+  $host_defined_apps.each |$app| {
+    #Skip if the app isn't in the right format
+    if !$app.match(/.*\[.*\]/) {
+      next()
+    }
+
+    $app_type  = $app.split('[')[0].downcase()
+    $app_title = $app.split('[')[1].chop().downcase()
+
+    #Skip if the app is already defined in the applications.yaml file
+    if $applications[$app_type][$app_title] {
+      next()
+    } else {
+      $app_nodes = puppetdb_query("inventory[facts] { facts.trusted.extensions.pp_application = \"${app}\}")
+
+      #Figure out how many uniqe components we have
+      $components = $app_nodes.map |$node| {
+        {$node[facts][trusted][extensions][pp_apptier] =>  $node[facts][trusted][certname]}
+      }.to_hash_with_merge
+
+      create_component_app($app_type, $app_title, $components)
+    }
+  }
 }
