@@ -99,6 +99,7 @@ site {
   $host_defined_apps.each |$app| {
     #Skip if the app isn't in the right format
     if !$app.match(/.*\[.*\]/) {
+      notice "Skipping application ${{app} because it isn't in format Type[title]"
       next()
     }
 
@@ -113,7 +114,20 @@ site {
 
       #Figure out how many uniqe components we have
       $components = $app_nodes.map |$node| {
-        {$node[facts][trusted][extensions][pp_apptier] =>  $node[facts][trusted][certname]}
+        $apptier = $node[facts][trusted][extensions][pp_apptier]
+
+        #The components might be listed as an array in string format
+        if ($apptier[0] == '[' and $apptier[-1] == ']') {
+          if $string.match(/\[.*\]/) {
+            $component_list = $string[1,-2].split(',')
+          }
+        } else {
+          $component_list = [$apptier]
+        }
+
+        $component_list.map |$comp| {
+          {$node[facts][trusted][extensions][pp_apptier] => $node[facts][trusted][certname]}
+        }.flatten
       }.to_hash_with_merge
 
       create_component_app($app_type, $app_title, $components)
