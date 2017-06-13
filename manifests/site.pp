@@ -118,7 +118,7 @@ site {
 
         #The components might be listed as an array in string format
         if ($apptier[0] == '[' and $apptier[-1] == ']') {
-          if $string.match(/\[.*\]/) {
+          if $apptier.match(/\[.*\]/) {
             $component_list = $string[1,-2].split(',')
           }
         } else {
