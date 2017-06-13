@@ -87,10 +87,9 @@ site {
     }
   }
 
-
   # Dynamic application declarations
   # from hosts themselves
-  $nodes = puppetdb_query('inventory[facts] { fact_contents { path ~> ["trusted","extensions","pp_application"] } }')
+  $nodes = puppetdb_query('inventory[facts] { fact_contents { path ~> ["trusted","extensions","pp_application"] } and nodes { deactivated is null } }')
 
   $host_defined_apps = $nodes.map |$node| {
     $node[facts][trusted][extensions][pp_application]
@@ -110,7 +109,7 @@ site {
     if $applications[$app_type][$app_title] {
       next()
     } else {
-      $app_nodes = puppetdb_query("inventory[facts] { facts.trusted.extensions.pp_application = \"${app}\"}")
+      $app_nodes = puppetdb_query("inventory[facts] { facts.trusted.extensions.pp_application = \"${app}\" and nodes { deactivated is null } }")
 
       #Figure out how many uniqe components we have
       $components = $app_nodes.map |$node| {
@@ -118,19 +117,18 @@ site {
 
         #The components might be listed as an array in string format
         if ($apptier[0] == '[' and $apptier[-1] == ']') {
-          if $apptier.match(/\[.*\]/) {
-            $component_list = $apptier[1,-2].split(',')
-          }
+          $component_list = $apptier[1,-2].split(',')
         } else {
           $component_list = [$apptier]
         }
 
         $component_list.map |$comp| {
-          {$node[facts][trusted][extensions][pp_apptier] => $node[facts][trusted][certname]}
-        }.flatten
-      }.to_hash_with_merge
+          {$comp => $node[facts][trusted][certname]}
+        }
+      }.flatten.to_hash_with_merge
 
-      create_component_app($app_type, $app_title, $components)
+      $components_hash = {'components' => $components}
+      create_component_app($app_type, $app_title, $components_hash)
     }
   }
 }
