@@ -99,12 +99,12 @@ site {
   $host_defined_apps.each |$app| {
     #Skip if the app isn't in the right format
     if !$app.match(/.*\[.*\]/) {
-      notice "Skipping application ${{app} because it isn't in format Type[title]"
+      notice "Skipping application ${app} because it isn't in format Type[title]"
       next()
     }
 
-    $app_type  = $app.split('[')[0].downcase()
-    $app_title = $app.split('[')[1].chop().downcase()
+    $app_type  = $app.split("[")[0].downcase()
+    $app_title = $app.split("[")[1].chop().downcase()
 
     #Skip if the app is already defined in the applications.yaml file
     if $applications[$app_type][$app_title] {
@@ -117,9 +117,9 @@ site {
         $apptier = $node[facts][trusted][extensions][pp_apptier]
 
         #The components might be listed as an array in string format
-        if ($apptier[0] == '[' and $apptier[-1] == ']') {
+        if ($apptier[0] == "[" and $apptier[-1] == "]") {
           if $apptier.match(/\[.*\]/) {
-            $component_list = $string[1,-2].split(',')
+            $component_list = $string[1,-2].split(",")
           }
         } else {
           $component_list = [$apptier]
