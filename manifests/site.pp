@@ -110,7 +110,7 @@ site {
     if $applications[$app_type][$app_title] {
       next()
     } else {
-      $app_nodes = puppetdb_query("inventory[facts] { facts.trusted.extensions.pp_application = \"${app}\}")
+      $app_nodes = puppetdb_query("inventory[facts] { facts.trusted.extensions.pp_application = \"${app}\"}")
 
       #Figure out how many uniqe components we have
       $components = $app_nodes.map |$node| {
