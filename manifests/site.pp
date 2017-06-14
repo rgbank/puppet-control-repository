@@ -56,10 +56,25 @@ node /^rgbank-web.*dockerbuilder/ {
 # Site application instances
 
 site {
-  $environment = get_compiler_environment()
 
-  # Dynamic application declarations
-  # from JSON
+
+  # Dynamic application declarations # from JSON
+  # The following code reads a applications.yaml file
+  # and creates an instance of each application defined.
+  # Format can be:
+  # ---
+  # <app_type>:
+  #   <app_title>:
+  #     components:
+  #       <component>:
+  #         query: <pql query>
+  #         ---OR---
+  #         nodes:
+  #           - <node>
+  #           - <node>
+  #           - <node>
+  #      
+  $environment = get_compiler_environment()
   $applications = loadyaml("/etc/puppetlabs/code/environments/${environment}/applications.yaml")
 
   $applications.each |String $type, $instances| {
@@ -83,12 +98,17 @@ site {
 
       $result = Hash.new( $param_hash + $component_hash)
 
-      create_component_app($type, $title, $result)
+      create_component_app($type, $title, $result) #<- From the puppetlabs/app_modeling Forge module
     }
   }
 
-  # Dynamic application declarations
-  # from hosts themselves
+  # Dynamic application declarations from hosts themselves.
+  # This is fairly advanced.
+  # The following code queries all nodes with pp_application defined and
+  # if the value of the trusted fact matches a Type[title] format, a
+  # new instance of that application will be created.
+  # The pp_apptier trusted fact is used to determine which components should
+  # be assigned to the node. pp_apptier can be a String or Array of Strings
   $nodes = puppetdb_query('inventory[facts] { fact_contents { path ~> ["trusted","extensions","pp_application"] } and nodes { deactivated is null } }')
 
   $host_defined_apps = $nodes.map |$node| {
