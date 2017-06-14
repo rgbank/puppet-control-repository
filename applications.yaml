@@ -6,17 +6,20 @@ rgbank:
         query: "inventory[certname] {
           facts.trusted.extensions.pp_application = \"rgbank\" and
           facts.trusted.extensions.pp_environment = \"production\" and
-          facts.trusted.extensions.pp_apptier = \"web\" }"
+          facts.trusted.extensions.pp_apptier = \"web\" and
+          nodes { deactived is null } }"
       Rgbank::Db:
         query: "inventory[certname] {
           facts.trusted.extensions.pp_application = \"rgbank\" and
           facts.trusted.extensions.pp_environment = \"production\" and
-          facts.trusted.extensions.pp_apptier = \"database\" }"
+          facts.trusted.extensions.pp_apptier = \"database\" and 
+          nodes { deactived is null } }"
       Rgbank::Load:
         query: "inventory[certname] {
           facts.trusted.extensions.pp_application = \"rgbank\" and
           facts.trusted.extensions.pp_environment = \"production\" and
-          facts.trusted.extensions.pp_apptier = \"loadbalancer\" }"
+          facts.trusted.extensions.pp_apptier = \"loadbalancer\" and
+          nodes { deactived is null } }"
   staging:
     parameters:
       db_username: 'staginguser'
@@ -26,17 +29,20 @@ rgbank:
         query: "inventory[certname] {
           facts.trusted.extensions.pp_application = \"rgbank\" and
           facts.trusted.extensions.pp_environment = \"staging\" and
-          facts.trusted.extensions.pp_apptier = \"web\" }"
+          facts.trusted.extensions.pp_apptier = \"web\" and
+          nodes { deactived is null } }"
       Rgbank::Db:
         query: "inventory[certname] {
           facts.trusted.extensions.pp_application = \"rgbank\" and
           facts.trusted.extensions.pp_environment = \"staging\" and
-          facts.trusted.extensions.pp_apptier = \"database\" }"
+          facts.trusted.extensions.pp_apptier = \"database\" and
+          nodes { deactived is null } }"
       Rgbank::Load:
         query: "inventory[certname] {
           facts.trusted.extensions.pp_application = \"rgbank\" and
           facts.trusted.extensions.pp_environment = \"staging\" and
-          facts.trusted.extensions.pp_apptier = \"loadbalancer\" }"
+          facts.trusted.extensions.pp_apptier = \"loadbalancer\" and
+          nodes { deactived is null } }"
   dev:
     parameters:
       use_docker: true
