@@ -44,7 +44,7 @@ mod 'app_modeling',
   :git => 'https://github.com/puppetlabs/puppetlabs-app_modeling'
 
 mod 'rgbank',
-  :git => 'http://gitlab.inf.puppet.vm/rgbank/puppetlabs-rgbank.git',
+  :git => 'http://github.com/rgbank/puppetlabs-rgbank.git',
   :ref => '06eac8f465ed72762cd33c9a593e898de46c1a23'
 
 mod 'hiera_jenkins',
