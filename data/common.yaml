@@ -14,3 +14,4 @@ rgbank::artifactory_server: '192.168.0.131:8081'
 profile::jira::dbuser: 'jira'
 profile::jira::dbpass: 'mypassword'
 rgbank-build-path: 'https://github.com/rgbank/rgbank-web'
+rgbank::web::enable_header: false
