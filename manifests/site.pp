@@ -59,9 +59,10 @@ site {
   # Static application definition
   rgbank { 'dev':
     nodes => {
-      Node['rgbank-development'] => {
-        [Rgbank::Db['development-db'],Rgbank::Web['development-web']]
-      }
+      Node['rgbank-development'] => [
+        Rgbank::Db['development-db'],
+        Rgbank::Web['development-web']
+      ]
     }
   }
 
