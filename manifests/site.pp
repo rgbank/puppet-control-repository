@@ -58,7 +58,8 @@ node /^rgbank-web.*dockerbuilder/ {
 site {
   # Static application definition
   rgbank { 'dev':
-    nodes => {
+    use_docker => true,
+    nodes      => {
       Node['rgbank-development'] => [
         Rgbank::Db['development-db'],
         Rgbank::Web['development-web']
