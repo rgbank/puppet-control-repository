@@ -1,6 +1,7 @@
 class role::rgbank::web(
   $use_puppetconf_header = false
 ) {
+  include profile::openssl
   include profile::common
   include profile::apache::remove
   include profile::nginx
